@@ -1,4 +1,0 @@
-Todos los datasets provienen de Basketball reference: https://www.basketball-reference.com/
-Datasets per game
-La primera fila de los de shooting seria conveninete eliminar porque solo agrupa diferentes tipos de datos. 
-Consultar antes de eliminar.

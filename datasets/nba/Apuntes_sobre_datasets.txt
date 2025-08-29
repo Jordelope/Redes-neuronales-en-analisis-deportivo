@@ -1,0 +1,2 @@
+Todos los datasets provienen de Basketball reference: https://www.basketball-reference.com/
+Datasets per game, per100 pos y per36 min
