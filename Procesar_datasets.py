@@ -101,7 +101,7 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida, clave="Player-add
         for jugador, grupo in df.groupby("Player", sort=False):
             multi_team = grupo[grupo["Team"].str.contains("TM", na=False)]
             if not multi_team.empty:
-                filtrado.append(multi_team.iloc[0])  # Guardamos la fila nTM
+                filtrado.append(multi_team.iloc[0].to_dict())  # Guardamos la fila nTM
             else:
                 filtrado.extend(grupo.to_dict("records"))  # Guardamos todas las demás filas
 
@@ -123,39 +123,53 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida, clave="Player-add
 
 
 #---------------------------------------------------------------------------------------------------------------------------
-lista_datsets_trad = [r"datasets\nba\nba19_20_trad.csv",   # Datasets pergame
-                      r"datasets\nba\nba20_21_trad.csv",
-                      r"datasets\nba\nba21_22_trad.csv",
-                      r"datasets\nba\nba22_23_trad.csv",
-                      r"datasets\nba\nba23_24_trad.csv",
-                      r"datasets\nba\nba24_25_trad.csv"
+lista_datsets_trad_per36 = [r"datasets\nba\per36\nba19_20_trad.csv",   # Datasets trad per36
+                      r"datasets\nba\per36\nba20_21_trad.csv",
+                      r"datasets\nba\per36\nba21_22_trad.csv",
+                      r"datasets\nba\per36\nba22_23_trad.csv",
+                      r"datasets\nba\per36\nba23_24_trad.csv",
+                      r"datasets\nba\per36\nba24_25_trad.csv"
                     ]
-lista_datasets_shtg = [ r"datasets\nba\nba19_20_shooting.csv",   # Datasets pergame
-                        r"datasets\nba\nba20_21_shooting.csv",
-                        r"datasets\nba\nba21_22_shooting.csv",
-                        r"datasets\nba\nba22_23_shooting.csv",
-                        r"datasets\nba\nba23_24_shooting.csv",
-                        r"datasets\nba\nba24_25_shooting.csv"
+lista_datsets_trad_per100 = [r"datasets\nba\per100\nba19_20_trad.csv",   # Datasets trad per 100
+                             r"datasets\nba\per100\nba20_21_trad.csv",
+                             r"datasets\nba\per100\nba21_22_trad.csv",
+                             r"datasets\nba\per100\nba22_23_trad.csv",
+                             r"datasets\nba\per100\nba23_24_trad.csv",
+                             r"datasets\nba\per100\nba24_25_trad.csv"
+                    ]
+lista_datsets_trad_pergame = [r"datasets\nba\pergame\nba19_20_trad.csv",   # Datasets trad pergame
+                              r"datasets\nba\pergame\nba20_21_trad.csv",
+                              r"datasets\nba\pergame\nba21_22_trad.csv",
+                              r"datasets\nba\pergame\nba22_23_trad.csv",
+                              r"datasets\nba\pergame\nba23_24_trad.csv",
+                              r"datasets\nba\pergame\nba24_25_trad.csv"
+                    ]
+lista_datasets_shtg = [ r"datasets\nba\pergame\nba19_20_shooting.csv",   # Datasets shooting
+                        r"datasets\nba\pergame\nba20_21_shooting.csv",
+                        r"datasets\nba\pergame\nba21_22_shooting.csv",
+                        r"datasets\nba\pergame\nba22_23_shooting.csv",
+                        r"datasets\nba\pergame\nba23_24_shooting.csv",
+                        r"datasets\nba\pergame\nba24_25_shooting.csv"
                         ]  
-lista_datsets_adv = [r"datasets\nba\nba19_20_advanced.csv",   # Datasets pergame
-                     r"datasets\nba\nba20_21_advanced.csv",
-                     r"datasets\nba\nba21_22_advanced.csv",
-                     r"datasets\nba\nba22_23_advanced.csv",
-                     r"datasets\nba\nba23_24_advanced.csv",
-                     r"datasets\nba\nba24_25_advanced.csv"
+lista_datsets_adv = [r"datasets\nba\pergame\nba19_20_advanced.csv",   # Datasets advanced
+                     r"datasets\nba\pergame\nba20_21_advanced.csv",
+                     r"datasets\nba\pergame\nba21_22_advanced.csv",
+                     r"datasets\nba\pergame\nba22_23_advanced.csv",
+                     r"datasets\nba\pergame\nba23_24_advanced.csv",
+                     r"datasets\nba\pergame\nba24_25_advanced.csv"
                     ] 
 
-archivos_salida_temporadas = [r"datasets\nba\nba19_20_completo.csv",   # Datasets pergame
-                              r"datasets\nba\nba20_21_completo.csv",
-                              r"datasets\nba\nba21_22_completo.csv",
-                              r"datasets\nba\nba22_23_completo.csv",
-                              r"datasets\nba\nba23_24_completo.csv",
-                              r"datasets\nba\nba24_25_completo.csv"
+archivos_salida_temporadas = [r"datasets\nba\per100\nba19_20_completo.csv",   # Datasets pergame
+                              r"datasets\nba\per100\nba20_21_completo.csv",
+                              r"datasets\nba\per100\nba21_22_completo.csv",
+                              r"datasets\nba\per100\nba22_23_completo.csv",
+                              r"datasets\nba\per100\nba23_24_completo.csv",
+                              r"datasets\nba\per100\nba24_25_completo.csv"
                     ]
 
-archivo_salida_completo_pergame = r"datasets\nba\combined19_25_pergame_filtered.csv"  
+archivo_salida_completo_per100 = r"datasets\nba\per100\combined19_25_per100_filtered.csv"  
 
-combinar_pergame_total = True
+combinar_per36_total = True
 completar_temporadas = True
 
 if __name__=="__main__":
@@ -163,10 +177,10 @@ if __name__=="__main__":
     
     if completar_temporadas :
         for i in range(len(archivos_salida_temporadas)):
-            completar_datasets(lista_datsets_trad[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
+            completar_datasets(lista_datsets_trad_per100[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
             completar_datasets(archivos_salida_temporadas[i] , lista_datasets_shtg[i] , archivos_salida_temporadas[i],"Player-additional",1)
 
-    if combinar_pergame_total:
-        combinar_varios_datasets_filtrando(archivos_salida_temporadas,archivo_salida_completo_pergame)
+    if combinar_per36_total:
+        combinar_varios_datasets_filtrando(archivos_salida_temporadas,archivo_salida_completo_per100)
 
     
