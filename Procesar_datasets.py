@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 
 def combinar2_datasets(dataset1, dataset2, salida):
     """
@@ -22,8 +23,6 @@ def combinar2_datasets(dataset1, dataset2, salida):
     return combinado
 
 
-
-import pandas as pd
 
 def completar_datasets(dataset1, dataset2, salida, clave="Player-additional",primera_fila=0):
     """
@@ -69,22 +68,33 @@ def completar_datasets(dataset1, dataset2, salida, clave="Player-additional",pri
 
 
 
-def combinar_varios_datasets_filtrando(lista_datasets, salida):
+
+def combinar_varios_datasets_filtrando(lista_datasets, salida, clave="Player-additional", temporada_tag=True):
     """
     Combina varios datasets CSV en uno solo sin eliminar duplicados entre temporadas,
     pero dentro de cada dataset filtra a los jugadores con múltiples equipos,
     dejando solo la fila con '2TM', '3TM', '4TM', etc.
-    Mantiene el orden original de 'Rk' dentro de cada dataset.
+    Si temporada_tag=True, añade el identificador de temporada al final de la clave 
+    para distinguir temporadas (extraído del nombre de archivo).
     
     Parámetros:
     - lista_datasets (list): lista con las rutas de los CSV a combinar
     - salida (str): ruta donde guardar el CSV combinado
+    - clave (str): columna clave del jugador (default: 'Player-additional')
+    - temporada_tag (bool): si True, añade sufijo con temporada
     """
     dataframes = []
 
     for archivo in lista_datasets:
         df = pd.read_csv(archivo)
 
+        # Extraer temporada del nombre del archivo: busca algo tipo "ba19_20"
+        temporada_match = re.search(r"ba\d{2}_\d{2}", archivo)
+        temporada = temporada_match.group(0) if temporada_match else archivo.split("/")[-1].split(".")[0]
+
+        # Modificar clave para distinguir temporadas
+        if temporada_tag:
+            df[clave] = df[clave].astype(str) + f"_{temporada}"
 
         # Filtrar duplicados de jugadores en varios equipos:
         filtrado = []
@@ -97,13 +107,13 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida):
 
         df_filtrado = pd.DataFrame(filtrado)
 
-        # Reordenar por Rk de nuevo (por si acaso al filtrar se alteró)
+        # Reordenar por Rk (manteniendo orden profesional)
         if "Rk" in df_filtrado.columns:
             df_filtrado = df_filtrado.sort_values("Rk", ascending=True)
 
         dataframes.append(df_filtrado)
 
-    # Concatenar todos los datasets ya filtrados (en el orden de la lista)
+    # Concatenar todos los datasets ya filtrados (se respeta el orden en la lista)
     combinado = pd.concat(dataframes, ignore_index=True)
 
     # Guardar en CSV
@@ -114,11 +124,11 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida):
 
 #---------------------------------------------------------------------------------------------------------------------------
 lista_datsets_trad = [r"datasets\nba\nba19_20_trad.csv",   # Datasets pergame
-                    r"datasets\nba\nba20_21_trad.csv",
-                    r"datasets\nba\nba21_22_trad.csv",
-                    r"datasets\nba\nba22_23_trad.csv",
-                    r"datasets\nba\nba23_24_trad.csv",
-                    r"datasets\nba\nba24_25_trad.csv"
+                      r"datasets\nba\nba20_21_trad.csv",
+                      r"datasets\nba\nba21_22_trad.csv",
+                      r"datasets\nba\nba22_23_trad.csv",
+                      r"datasets\nba\nba23_24_trad.csv",
+                      r"datasets\nba\nba24_25_trad.csv"
                     ]
 lista_datasets_shtg = [ r"datasets\nba\nba19_20_shooting.csv",   # Datasets pergame
                         r"datasets\nba\nba20_21_shooting.csv",
@@ -145,7 +155,7 @@ archivos_salida_temporadas = [r"datasets\nba\nba19_20_completo.csv",   # Dataset
 
 archivo_salida_completo_pergame = r"datasets\nba\combined19_25_pergame_filtered.csv"  
 
-combinar_pergame = False
+combinar_pergame_total = True
 completar_temporadas = True
 
 if __name__=="__main__":
@@ -156,6 +166,7 @@ if __name__=="__main__":
             completar_datasets(lista_datsets_trad[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
             completar_datasets(archivos_salida_temporadas[i] , lista_datasets_shtg[i] , archivos_salida_temporadas[i],"Player-additional",1)
 
-        
+    if combinar_pergame_total:
+        combinar_varios_datasets_filtrando(archivos_salida_temporadas,archivo_salida_completo_pergame)
 
     
