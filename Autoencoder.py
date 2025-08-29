@@ -36,6 +36,10 @@ class Autoencoder:
 
     def parameters(self):
         return self.encoder.parameters() + self.decoder.parameters()
+    
+    def weights(self):
+        """Devuelve solo los pesos (w) de encoder y decoder."""
+        return self.encoder.weights() + self.decoder.weights()
 
     def __call__(self,x):
         """
@@ -50,7 +54,7 @@ class Autoencoder:
     def train_model(self, training_data: list[torch.Tensor],
                     n_steps: int, step_sz: float,
                     loss_f: callable = F.mse_loss, batch_size: int = None,
-                    beta: float = 1e-4, lambda_l2: float = 1e-4):
+                    beta_l1: float = None, beta_kl: float=None, lambda_l2: float = None):
         """
         Entrena el autoencoder con:
         - Penalización L1 sobre la capa latente (sparsity).
@@ -64,21 +68,27 @@ class Autoencoder:
         
         # Valores si recibimos None
         batch_size = len(training_data) if batch_size is None else batch_size
-        beta = 0.0 if beta is None else beta
+        beta_l1 = 0.0 if beta_l1 is None else beta_l1
+        beta_kl = 0.0 if beta_kl is None else beta_kl
         lambda_l2 = 0.0 if lambda_l2 is None else lambda_l2
         
 
         parameters = self.parameters()
+        weights = self.weights()
 
         for k in range(n_steps):
+            # Log de perdidad
             epoch_loss = 0.0
+            epoch_recon = 0.0
+            epoch_l1 = 0.0
+            epoch_l2 =0.0
             num_batches = 0
 
             for X_batch, Y_batch in get_batches(training_data, training_data, batch_size):
 
                 # Tensores
                 X_batch = torch.stack(X_batch)  # (B, dim_in)
-                if loss_f.__name__ == "cross_entropy":
+                if loss_f.__name__ == "cross_entropy": #No deberia recibir esta funcion de perdidad
                     # Y_batch: índices de clase
                     Y_batch = torch.tensor(Y_batch, dtype=torch.long)
                 else:
@@ -95,16 +105,32 @@ class Autoencoder:
 
                 # Pérdida de reconstrucción
                 loss_recon = loss_f(decoded_batch,Y_batch) 
-                #loss recon = sum(loss_f(y_pred, y_true)  for y_pred, y_true in zip(decoded_batch, Y_batch)) / len(Y_batch)
 
                 # Penalización L1 sobre capa latente
-                loss_l1 = torch.mean(torch.abs(encoded_batch))
-                
+                if beta_l1 > 0.0:
+                    loss_l1 = torch.mean(torch.abs(encoded_batch))
+                else:
+                    loss_l1 = 0.0
+
+                # Sparsity por KL divergence
+                if beta_kl > 0.0:
+                    rho = 0.05  # sparsity objetivo
+                    rho_hat = torch.mean(encoded_batch, dim=0)  # media por neurona latente
+
+                    kl_div = rho * torch.log((rho + 1e-8) / (rho_hat + 1e-8)) +  (1 - rho) * torch.log((1 - rho + 1e-8) / (1 - rho_hat + 1e-8))
+
+                    loss_kl = torch.sum(kl_div)  # sumar sobre todas las neuronas
+                else:
+                    loss_kl = 0.0
+
                 # Regularización L2 sobre todos los parámetros
-                loss_l2 = sum(torch.sum(p**2) for p in parameters)
+                if lambda_l2 > 0.0:
+                    loss_l2 = sum(torch.sum(w**2) for w in weights) / X_batch.size(0)
+                else:
+                    loss_l2 = 0.0
 
                 # Pérdida total
-                loss = loss_recon + beta * loss_l1 + lambda_l2 * loss_l2
+                loss = loss_recon + beta_l1 * loss_l1 + beta_kl * loss_kl + lambda_l2 * loss_l2
 
                 # --- Backward ---
                 loss.backward()
@@ -112,16 +138,25 @@ class Autoencoder:
                 # --- Actualización de parámetros ---
                 for p in parameters:
                     p.data -= step_sz * p.grad
-
+                
+                # --- Actualizacion perdida(log) ---
                 epoch_loss += loss.item()
+                epoch_recon += loss_recon.item()
+                epoch_l1 += loss_l1.item()
+                epoch_kl += loss_kl.item()
+                epoch_l2 += loss_l2.item()
                 num_batches += 1
 
             # Log
             if k % 1000 == 0 or k == n_steps - 1:
                 avg_loss = epoch_loss / num_batches
+                avg_recon = epoch_recon / num_batches
+                avg_l1 = epoch_l1 / num_batches
+                avg_kl = epoch_kl / num_batches
+                avg_l2 = epoch_l2 / num_batches
                 print(f"Paso {k} | Loss total: {avg_loss:.6f} "
-                    f"(Recon: {loss_recon.item():.6f}, L1: {loss_l1.item():.6f}, L2: {loss_l2.item():.6f})")
-
+                    f"(Recon: {avg_recon:.6f}, L1: {avg_l1:.6f}, KL: {avg_kl:.6f}, L2: {avg_l2:.6f})")
+                
 
 def guardar_autoencoder( red : Autoencoder, archivo : str):
     """
