@@ -113,12 +113,12 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida):
 
 
 #---------------------------------------------------------------------------------------------------------------------------
-lista_datsets_pg = [r"datasets\nba\nba19_20_pergame.csv",   # Datasets pergame
-                    r"datasets\nba\nba20_21_pergame.csv",
-                    r"datasets\nba\nba21_22_pergame.csv",
-                    r"datasets\nba\nba22_23_pergame.csv",
-                    r"datasets\nba\nba23_24_pergame.csv",
-                    r"datasets\nba\nba24_25_pergame.csv"
+lista_datsets_trad = [r"datasets\nba\nba19_20_trad.csv",   # Datasets pergame
+                    r"datasets\nba\nba20_21_trad.csv",
+                    r"datasets\nba\nba21_22_trad.csv",
+                    r"datasets\nba\nba22_23_trad.csv",
+                    r"datasets\nba\nba23_24_trad.csv",
+                    r"datasets\nba\nba24_25_trad.csv"
                     ]
 lista_datasets_shtg = [ r"datasets\nba\nba19_20_shooting.csv",   # Datasets pergame
                         r"datasets\nba\nba20_21_shooting.csv",
@@ -143,19 +143,19 @@ archivos_salida_temporadas = [r"datasets\nba\nba19_20_completo.csv",   # Dataset
                               r"datasets\nba\nba24_25_completo.csv"
                     ]
 
-archivo_salida_pg = r"datasets\nba\combined19_25_pergame_filtered.csv"  
+archivo_salida_completo_pergame = r"datasets\nba\combined19_25_pergame_filtered.csv"  
 
 combinar_pergame = False
 completar_temporadas = True
 
 if __name__=="__main__":
     
-    if combinar_pergame:
-        combinar_varios_datasets_filtrando(lista_datsets_pg,archivo_salida_pg)
     
     if completar_temporadas :
         for i in range(len(archivos_salida_temporadas)):
-            completar_datasets(lista_datsets_pg[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
+            completar_datasets(lista_datsets_trad[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
             completar_datasets(archivos_salida_temporadas[i] , lista_datasets_shtg[i] , archivos_salida_temporadas[i],"Player-additional",1)
+
+        
 
     
