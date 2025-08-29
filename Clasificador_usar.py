@@ -58,7 +58,7 @@ _, _, _, xs_a_clasificar, ys_para_evaluar, etiquetas_test = procesar_datos(archi
 ## OPCIONES visualizacion ##
 ver_repr_latente = True
 
-dim_repr = 3 
+dim_repr = 2 
 modos_redd_dim = ["pca", "tsne", "umap"]
 modo_redd_dim = "pca"
 visualizar_todos = True

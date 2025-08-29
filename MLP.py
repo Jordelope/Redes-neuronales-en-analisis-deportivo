@@ -21,17 +21,6 @@ import torch.nn.functional as F
 import random
 
 
-"""
-
-Fichero para probar posibles mejoras sin modificar el original que funciona correctamente.
-
-PENDIENTE: 
-    -Mejorar el entrenamiento
-    -REVISAR cross_entropy
-
-OPCIONAL: Modificar get_batches para que devuelva tensores (ya lo hace el entrenamiento ahora mismo)
-
-"""
 
 ## Funciones relevantes ##
 
@@ -86,10 +75,13 @@ class Layer:
        
         self.f_act = f_act
         
-
     def parameters(self):
         """Devuelve todos los parámetros entrenables de la capa."""
         return [self.w, self.b]
+
+    def weights(self):
+        """Devuelve solo los pesos (w) de la capa."""
+        return [self.w]
 
     def __call__(self, x):
         """
@@ -151,6 +143,10 @@ class MLP:
     def parameters(self):
         """Devuelve todos los parámetros entrenables de la red (de todas las capas)."""
         return [p for layer in self.layers for p in layer.parameters()]
+    
+    def weights(self):
+        """Devuelve solo los pesos (w) de todas las capas de la red."""
+        return [w for layer in self.layers for w in layer.weights()]
 
     def __call__(self, x : torch.Tensor):
         """

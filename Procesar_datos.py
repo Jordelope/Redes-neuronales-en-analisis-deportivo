@@ -44,7 +44,7 @@ def filtrar_repetidos(df):
                     resultado.append(grupo.iloc[:1])
             return pd.concat(resultado)
         else:
-            return df#aquiiiiiiiiii
+            return df
 
 
 def procesar_datos( archivo_set_train: str,
@@ -132,7 +132,7 @@ def procesar_datos( archivo_set_train: str,
             max_vals = X_train_raw.max(axis=0)
             
             rango = max_vals - min_vals
-            rango[rango == 0] == 1e-8 # No queremos dividir entre 0
+            rango[rango == 0] = 1e-8 # No queremos dividir entre 0
 
             X_train = (X_train_raw - min_vals) / rango
             X_test  = (X_test_raw -min_vals) / rango
