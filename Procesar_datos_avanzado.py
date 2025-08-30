@@ -80,13 +80,67 @@ def procesar_datos(csv_file, tipo_stats="completo"):
 
     # ------------------- Tensor final -------------------
     X = df[selected_cols]
-    X_tensor = torch.tensor(X.values, dtype=torch.float32)
+    
+    # Eliminar filas con NaN tanto en X como en etiquetas
+    mask = ~X.isna().any(axis=1)
+    X = X[mask]
+    etiquetas = etiquetas[mask]
 
-    print(f"\n Datos procesados correctamente (tipo_stats={tipo_stats}, n_columnas={X_tensor.shape[1]}). \n")
+    X_tensor = torch.tensor(X.values, dtype=torch.float32)
+    if X.isna().any().any():
+        print("⚠️ Atención: Se encontraron NaNs en las estadísticas seleccionadas.")
+        print(X.isna().sum())  # Muestra cuántos NaNs tiene cada columna
+    else:
+        print(f"✅ No se encontraron NaNs en X.Total de jugadores válidos: {X.shape[0]}")
+        print(f"\n Datos de {csv_file} procesados correctamente (tipo_stats={tipo_stats}, n_columnas={X_tensor.shape[1]}). \n")
     return X_tensor, etiquetas
 
 
 
-X_completo, y = procesar_datos(r"datasets\nba\pergame\combined19_25_pergame_filtered.csv", tipo_stats="completo")
-X_volumen, y = procesar_datos(r"datasets\nba\pergame\combined19_25_pergame_filtered.csv", tipo_stats="volumen")
-X_tiro, y = procesar_datos(r"datasets\nba\pergame\combined19_25_pergame_filtered.csv", tipo_stats="tiro")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv", tipo_stats="completo")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\scout_per100_nba24_25.csv", tipo_stats="completo")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\test_per100_nba18_19.csv", tipo_stats="completo")
+
+X_completo36, y = procesar_datos(r"datasets\nba\finales\nba19_24_per36_entrenamiento.csv", tipo_stats="completo")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\scout_per36_nba24_25.csv", tipo_stats="completo")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\test_per36_nba18_19.csv", tipo_stats="completo")
+
+X_completoG, y = procesar_datos(r"datasets\nba\finales\nba19_24_pergame_entrenamiento.csv", tipo_stats="completo")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\scout_pergame_nba24_25.csv", tipo_stats="completo")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\test_pergame_nba18_19.csv", tipo_stats="completo")
+
+
+
+
+X_volumen100, y = procesar_datos(r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv", tipo_stats="volumen")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\scout_per100_nba24_25.csv", tipo_stats="volumen")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\test_per100_nba18_19.csv", tipo_stats="volumen")
+
+
+X_volumen36, y = procesar_datos(r"datasets\nba\finales\nba19_24_per36_entrenamiento.csv", tipo_stats="volumen")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\scout_per36_nba24_25.csv", tipo_stats="volumen")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\test_per36_nba18_19.csv", tipo_stats="volumen")
+
+
+X_volumenG, y = procesar_datos(r"datasets\nba\finales\nba19_24_pergame_entrenamiento.csv", tipo_stats="volumen")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\scout_pergame_nba24_25.csv", tipo_stats="volumen")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\test_pergame_nba18_19.csv", tipo_stats="volumen")
+
+
+
+
+
+X_tiro100, y = procesar_datos(r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv", tipo_stats="tiro")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\scout_per100_nba24_25.csv", tipo_stats="tiro")
+X_completo_per100, y = procesar_datos(r"datasets\nba\finales\test_per100_nba18_19.csv", tipo_stats="tiro")
+
+
+X_tiro36, y = procesar_datos(r"datasets\nba\finales\nba19_24_per36_entrenamiento.csv", tipo_stats="tiro")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\scout_per36_nba24_25.csv", tipo_stats="tiro")
+X_completo_per36, y = procesar_datos(r"datasets\nba\finales\test_per36_nba18_19.csv", tipo_stats="tiro")
+
+
+X_tiroG, y = procesar_datos(r"datasets\nba\finales\nba19_24_pergame_entrenamiento.csv", tipo_stats="tiro")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\scout_pergame_nba24_25.csv", tipo_stats="tiro")
+X_completo_pergame, y = procesar_datos(r"datasets\nba\finales\test_pergame_nba18_19.csv", tipo_stats="tiro")
+

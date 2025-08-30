@@ -222,10 +222,10 @@ if __name__=="__main__":
                 completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivo_test_per100,"Player-additional",1)
             
             elif i== len(archivos_salida_temporadas_per100)-1:
-                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_per100[i],"Player-additional",1)
+                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivo_scout_per100,"Player-additional",1)
             
             else:
-                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivo_scout_per100,"Player-additional",1)
+                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_per100[i],"Player-additional",1)
         #------------------
         for i in range(len(archivos_salida_temporadas_per36)):
             completar_datasets(lista_datsets_trad_per36[i] , lista_datsets_adv[i] , archivos_salida_temporadas_per36[i])
@@ -252,8 +252,8 @@ if __name__=="__main__":
                 completar_datasets(archivos_salida_temporadas_pergame[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_pergame[i],"Player-additional",1)
 
 
-    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per100,archivo_entrenamiento_completo_per100)
-    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per36,archivo_entrenamiento_completo_per36)
-    combinar_varios_datasets_filtrando(archivos_salida_temporadas_pergame,archivo_entrenamiento_completo_pergame)
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per100[1:-1],archivo_entrenamiento_completo_per100)
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per36[1:-1],archivo_entrenamiento_completo_per36)
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_pergame[1:-1],archivo_entrenamiento_completo_pergame)
 
     
