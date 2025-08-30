@@ -123,35 +123,41 @@ def combinar_varios_datasets_filtrando(lista_datasets, salida, clave="Player-add
 
 
 #---------------------------------------------------------------------------------------------------------------------------
-lista_datsets_trad_per36 = [r"datasets\nba\per36\nba19_20_trad.csv",   # Datasets trad per36
-                      r"datasets\nba\per36\nba20_21_trad.csv",
-                      r"datasets\nba\per36\nba21_22_trad.csv",
-                      r"datasets\nba\per36\nba22_23_trad.csv",
-                      r"datasets\nba\per36\nba23_24_trad.csv",
-                      r"datasets\nba\per36\nba24_25_trad.csv"
+lista_datsets_trad_per36 = [r"datasets\nba\per36\nba18_19_trad.csv",
+                            r"datasets\nba\per36\nba19_20_trad.csv",   # Datasets trad per36
+                            r"datasets\nba\per36\nba20_21_trad.csv",
+                            r"datasets\nba\per36\nba21_22_trad.csv",
+                            r"datasets\nba\per36\nba22_23_trad.csv",
+                            r"datasets\nba\per36\nba23_24_trad.csv",
+                            r"datasets\nba\per36\nba24_25_trad.csv"
                     ]
-lista_datsets_trad_per100 = [r"datasets\nba\per100\nba19_20_trad.csv",   # Datasets trad per 100
+lista_datsets_trad_per100 = [r"datasets\nba\per100\nba18_19_trad.csv",
+                             r"datasets\nba\per100\nba19_20_trad.csv",   # Datasets trad per 100
                              r"datasets\nba\per100\nba20_21_trad.csv",
                              r"datasets\nba\per100\nba21_22_trad.csv",
                              r"datasets\nba\per100\nba22_23_trad.csv",
                              r"datasets\nba\per100\nba23_24_trad.csv",
                              r"datasets\nba\per100\nba24_25_trad.csv"
                     ]
-lista_datsets_trad_pergame = [r"datasets\nba\pergame\nba19_20_trad.csv",   # Datasets trad pergame
+lista_datsets_trad_pergame = [r"datasets\nba\pergame\nba18_19_trad.csv",
+                              r"datasets\nba\pergame\nba19_20_trad.csv",   # Datasets trad pergame
                               r"datasets\nba\pergame\nba20_21_trad.csv",
                               r"datasets\nba\pergame\nba21_22_trad.csv",
                               r"datasets\nba\pergame\nba22_23_trad.csv",
                               r"datasets\nba\pergame\nba23_24_trad.csv",
                               r"datasets\nba\pergame\nba24_25_trad.csv"
                     ]
-lista_datasets_shtg = [ r"datasets\nba\pergame\nba19_20_shooting.csv",   # Datasets shooting
+
+lista_datasets_shtg = [ r"datasets\nba\pergame\nba18_19_shooting.csv",
+                        r"datasets\nba\pergame\nba19_20_shooting.csv",   # Datasets shooting
                         r"datasets\nba\pergame\nba20_21_shooting.csv",
                         r"datasets\nba\pergame\nba21_22_shooting.csv",
                         r"datasets\nba\pergame\nba22_23_shooting.csv",
                         r"datasets\nba\pergame\nba23_24_shooting.csv",
                         r"datasets\nba\pergame\nba24_25_shooting.csv"
                         ]  
-lista_datsets_adv = [r"datasets\nba\pergame\nba19_20_advanced.csv",   # Datasets advanced
+lista_datsets_adv = [r"datasets\nba\pergame\nba18_19_advanced.csv",
+                     r"datasets\nba\pergame\nba19_20_advanced.csv",   # Datasets advanced
                      r"datasets\nba\pergame\nba20_21_advanced.csv",
                      r"datasets\nba\pergame\nba21_22_advanced.csv",
                      r"datasets\nba\pergame\nba22_23_advanced.csv",
@@ -159,28 +165,95 @@ lista_datsets_adv = [r"datasets\nba\pergame\nba19_20_advanced.csv",   # Datasets
                      r"datasets\nba\pergame\nba24_25_advanced.csv"
                     ] 
 
-archivos_salida_temporadas = [r"datasets\nba\per100\nba19_20_completo.csv",   # Datasets pergame
-                              r"datasets\nba\per100\nba20_21_completo.csv",
-                              r"datasets\nba\per100\nba21_22_completo.csv",
-                              r"datasets\nba\per100\nba22_23_completo.csv",
-                              r"datasets\nba\per100\nba23_24_completo.csv",
-                              r"datasets\nba\per100\nba24_25_completo.csv"
+archivos_salida_temporadas_per100 = [r"datasets\nba\per100\nba18_19_completo.csv",
+                                     r"datasets\nba\per100\nba19_20_completo.csv",   # Datasets 100
+                                     r"datasets\nba\per100\nba20_21_completo.csv",
+                                     r"datasets\nba\per100\nba21_22_completo.csv",
+                                     r"datasets\nba\per100\nba22_23_completo.csv",
+                                     r"datasets\nba\per100\nba23_24_completo.csv",
+                                     r"datasets\nba\per100\nba24_25_completo.csv"
+                    ]
+archivos_salida_temporadas_per36 = [r"datasets\nba\per36\nba18_19_completo.csv",
+                                    r"datasets\nba\per36\nba19_20_completo.csv",   # Datasets 36
+                                    r"datasets\nba\per36\nba20_21_completo.csv",
+                                    r"datasets\nba\per36\nba21_22_completo.csv",
+                                    r"datasets\nba\per36\nba22_23_completo.csv",
+                                    r"datasets\nba\per36\nba23_24_completo.csv",
+                                    r"datasets\nba\per36\nba24_25_completo.csv"
+                    ]
+archivos_salida_temporadas_pergame = [r"datasets\nba\pergame\nba18_19_completo.csv",
+                                      r"datasets\nba\pergame\nba19_20_completo.csv",   # Datasets pergame
+                                      r"datasets\nba\pergame\nba20_21_completo.csv",
+                                      r"datasets\nba\pergame\nba21_22_completo.csv",
+                                      r"datasets\nba\pergame\nba22_23_completo.csv",
+                                      r"datasets\nba\pergame\nba23_24_completo.csv",
+                                      r"datasets\nba\pergame\nba24_25_completo.csv"
                     ]
 
-archivo_salida_completo_per100 = r"datasets\nba\per100\combined19_25_per100_filtered.csv"  
 
-combinar_per36_total = True
+archivo_entrenamiento_completo_per100 = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
+
+archivo_entrenamiento_completo_per36 = r"datasets\nba\finales\nba19_24_per36_entrenamiento.csv"  
+
+archivo_entrenamiento_completo_pergame = r"datasets\nba\finales\nba19_24_pergame_entrenamiento.csv"
+
+archivo_test_per100 = r"datasets\nba\finales\test_per100_nba18_19.csv"
+archivo_test_per36 = r"datasets\nba\finales\test_per36_nba18_19.csv"
+archivo_test_pergame = r"datasets\nba\finales\test_pergame_nba18_19.csv"
+
+archivo_scout_per100 = r"datasets\nba\finales\scout_per100_nba24_25.csv"
+archivo_scout_per36 = r"datasets\nba\finales\scout_per36_nba24_25.csv"
+archivo_scout_pergame = r"datasets\nba\finales\scout_pergame_nba24_25.csv"
+
+combinar_finales_total = True
 completar_temporadas = True
+
+
 
 if __name__=="__main__":
     
     
     if completar_temporadas :
-        for i in range(len(archivos_salida_temporadas)):
-            completar_datasets(lista_datsets_trad_per100[i] , lista_datsets_adv[i] , archivos_salida_temporadas[i])
-            completar_datasets(archivos_salida_temporadas[i] , lista_datasets_shtg[i] , archivos_salida_temporadas[i],"Player-additional",1)
+        
+        for i in range(len(archivos_salida_temporadas_per100)):
+            completar_datasets(lista_datsets_trad_per100[i] , lista_datsets_adv[i] , archivos_salida_temporadas_per100[i])
+            
+            if i == 0:
+                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivo_test_per100,"Player-additional",1)
+            
+            elif i== len(archivos_salida_temporadas_per100)-1:
+                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_per100[i],"Player-additional",1)
+            
+            else:
+                completar_datasets(archivos_salida_temporadas_per100[i] , lista_datasets_shtg[i] , archivo_scout_per100,"Player-additional",1)
+        #------------------
+        for i in range(len(archivos_salida_temporadas_per36)):
+            completar_datasets(lista_datsets_trad_per36[i] , lista_datsets_adv[i] , archivos_salida_temporadas_per36[i])
+            
+            if i == 0:
+                completar_datasets(archivos_salida_temporadas_per36[i] , lista_datasets_shtg[i] , archivo_test_per36,"Player-additional",1)
 
-    if combinar_per36_total:
-        combinar_varios_datasets_filtrando(archivos_salida_temporadas,archivo_salida_completo_per100)
+            elif i == len(archivos_salida_temporadas_per36)-1:
+                completar_datasets(archivos_salida_temporadas_per36[i] , lista_datasets_shtg[i] , archivo_scout_per36,"Player-additional",1)
+
+            else:
+                completar_datasets(archivos_salida_temporadas_per36[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_per36[i],"Player-additional",1)
+        #-------------------
+        for i in range(len(archivos_salida_temporadas_pergame)):
+            completar_datasets(lista_datsets_trad_pergame[i] , lista_datsets_adv[i] , archivos_salida_temporadas_pergame[i])
+            
+            if i == 0:
+                completar_datasets(archivos_salida_temporadas_pergame[i] , lista_datasets_shtg[i] , archivo_test_pergame,"Player-additional",1)
+            
+            elif i == len(archivos_salida_temporadas_pergame)-1 :
+                completar_datasets(archivos_salida_temporadas_pergame[i] , lista_datasets_shtg[i] , archivo_scout_pergame,"Player-additional",1)
+
+            else:
+                completar_datasets(archivos_salida_temporadas_pergame[i] , lista_datasets_shtg[i] , archivos_salida_temporadas_pergame[i],"Player-additional",1)
+
+
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per100,archivo_entrenamiento_completo_per100)
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_per36,archivo_entrenamiento_completo_per36)
+    combinar_varios_datasets_filtrando(archivos_salida_temporadas_pergame,archivo_entrenamiento_completo_pergame)
 
     
