@@ -81,6 +81,7 @@ class Autoencoder:
             epoch_loss = 0.0
             epoch_recon = 0.0
             epoch_l1 = 0.0
+            epoch_kl = 0.0
             epoch_l2 =0.0
             num_batches = 0
 
@@ -115,7 +116,7 @@ class Autoencoder:
                 # Sparsity por KL divergence
                 if beta_kl > 0.0:
                     rho = 0.05  # sparsity objetivo
-                    rho_hat = torch.mean(encoded_batch, dim=0)  # media por neurona latente
+                    rho_hat = torch.clamp(torch.mean(encoded_batch, dim=0), 1e-6, 1-1e-6)
 
                     kl_div = rho * torch.log((rho + 1e-8) / (rho_hat + 1e-8)) +  (1 - rho) * torch.log((1 - rho + 1e-8) / (1 - rho_hat + 1e-8))
 
@@ -148,7 +149,7 @@ class Autoencoder:
                 num_batches += 1
 
             # Log
-            if k % 1000 == 0 or k == n_steps - 1:
+            if k % 50 == 0 or k == n_steps - 1:
                 avg_loss = epoch_loss / num_batches
                 avg_recon = epoch_recon / num_batches
                 avg_l1 = epoch_l1 / num_batches

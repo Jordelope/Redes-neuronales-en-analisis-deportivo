@@ -45,11 +45,13 @@ nombre_a_func = {
     "log_softmax": F.log_softmax,
     "tanh": torch.tanh,
     "sigmoid": torch.sigmoid,
+    "leaky_relu": F.leaky_relu,
+    "elu": F.elu,
     "cross_entropy": F.cross_entropy,
     "binary_cross_entropy": F.binary_cross_entropy,
     "mse_loss": F.mse_loss,
     "none": None
-    }
+}
 
 ## Capa de neuronas ##
 
