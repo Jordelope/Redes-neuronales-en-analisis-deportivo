@@ -15,7 +15,7 @@ from Procesar_datos_avanzado import procesar_datos
 
 archivo_encod = r"" 
 archivo_decod = r"" 
-archivo_autoencoder =r"redes_disponibles\finales\overcomplete\AE_over_allStatPG.json" 
+archivo_autoencoder =r"redes_disponibles\finales\undercomplete\AE_under_allgStatP100.json" 
 tipo_estadisticas = "completo"
 
 ## HIPERPARAMETROS de entrenamiento ##
@@ -36,14 +36,14 @@ override_guardado = False   # En caso de True: se guarda aunque no mejore el err
 
 sobreescribir_submodelos = False # En caso de True: Se sobreescriben archivos de encoder y decoder.
 
-descripcion = f" Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz} y valores beta_l1={beta_l1},beta_kl={beta_kl}, lambda_l2={lambda_l2}.\n Establecemos umbrales de 8mpg y 20pj."
+descripcion = f" Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz} y valores beta_l1={beta_l1},beta_kl={beta_kl}, lambda_l2={lambda_l2}."
 añadir_descripcion = True # Añade a la descripcion ya existente
 sustituir_desc = False    # CUIDADO, SI TRUE ELIMINA LA DESCRIPCIÓN YA EXISTENTE
 añadir_info_mejora = True # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
 
 
-archivo_entrenamiento = r"datasets\nba\finales\nba19_24_pergame_entrenamiento.csv"
-archivo_test = r"datasets\nba\finales\test_pergame_nba18_19.csv" 
+archivo_entrenamiento = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
+archivo_test = r"datasets\nba\finales\test_per100_nba18_19.csv" 
 xs_train, _ = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
 xs_test, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
 ys_test = xs_test

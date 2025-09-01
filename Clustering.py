@@ -5,11 +5,12 @@ from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from Embeddings import cargar_embeddings
+from Procesar_datos_avanzado import procesar_datos
 
-player_embeddings = r"embeddings\emb_scout24_25_allStatPG_overcomplete.csv"
-archivo_clusters = r"clusterings\cltr_scout24_25_allStatPG_overcomplete_5cltrs.csv"
-archivo_grafico = r"clusterings\graficos\img_scout24_25_allStatPG_overcomplete_5cltrs.png"
-n_clusters = 5
+player_embeddings = r"embeddings\emb_scout24_25_shtgStatPG_overcomplete.csv"
+archivo_clusters = r"clusterings\cltr_scout24_25_shtgStatPG_overcomplete_10cltrs.csv"
+archivo_grafico = r"clusterings\graficos\img_scout24_25_shtgStatPG_overcomplete_10cltrs.png"
+n_clusters = 10
 
 
 def clustering_embeddings(archivo_embeddings, n_clusters=5, archivo_salida="clusters.csv", guardar_grafico=False, archivo_grafico="clusters.png", met_red_dim : str="pca"):
@@ -53,6 +54,42 @@ def clustering_embeddings(archivo_embeddings, n_clusters=5, archivo_salida="clus
             print(f"Gráfico guardado en {archivo_grafico}")
 
     return dicc_clusters
+
+
+
+def clusterizar_pca(csv_file, tipo_stats="completo", n_clusters=5, n_components=2):
+    """
+    Procesa datos con procesar_datos, aplica PCA y agrupa con K-Means.
+    Devuelve los clusters y muestra un scatter plot.
+    """
+    # Procesar datos con tu función
+    X_tensor, etiquetas = procesar_datos(csv_file, tipo_stats=tipo_stats)
+
+    # Convertir a numpy
+    X = X_tensor.numpy()
+
+    # PCA
+    pca = PCA(n_components=n_components)
+    X_pca = pca.fit_transform(X)
+
+    # K-means
+    kmeans = KMeans(n_clusters=n_clusters, random_state=42, n_init=10)
+    clusters = kmeans.fit_predict(X_pca)
+
+    # Visualización
+    plt.figure(figsize=(10, 8))
+    scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=clusters, cmap="tab10", alpha=0.7)
+
+    # Añadir etiquetas de TODOS los jugadores
+    for i, jugador in enumerate(etiquetas["Player"]):
+        plt.text(X_pca[i, 0] + 0.02, X_pca[i, 1] + 0.02, jugador, fontsize=7)
+
+    plt.title(f"Clusters con PCA (k={n_clusters}, tipo_stats={tipo_stats})")
+    plt.xlabel("PC1")
+    plt.ylabel("PC2")
+    plt.colorbar(scatter, label="Cluster")
+    plt.tight_layout()
+    plt.show()
 
 
 def graficar_clusters(archivo_clusters, archivo_embeddings, archivo_grafico=None):

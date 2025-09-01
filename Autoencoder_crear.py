@@ -11,7 +11,7 @@ from Procesar_datos import procesar_datos
 existen_MLP = False
 archivo_encod = r"" 
 archivo_decod = r"" 
-archivo_autoencoder = r"redes_disponibles\finales\undercomplete\AE_under_shtgStatPG.json" 
+archivo_autoencoder = r"redes_disponibles\finales\AE_redDim2_dimIN80_.json" 
 
 
 ## OPCIONES de entrenado y guardado ##
@@ -20,18 +20,18 @@ save_decoder = False
 save_encoder = False
 
 añadir_descripcion = True  # Opción de añadir una descripción
-descripcion = " Autoencoder undercomplete para tratar estadisticas tiro en per game."
+descripcion = " Autoencoder undercomplete para tratar visualizar en 2 dim."
 
 ## ESTRUCTURA autoencoder (si no tenemos los MLP) ##
 
-input_sz = 30            # Número de entradas
-lat_spc_dim = 6         # Dimension espacio latente(salida encoder, entrada decoder) 
+input_sz = 80            # Número de entradas
+lat_spc_dim = 2         # Dimension espacio latente(salida encoder, entrada decoder) 
 
-estructura_encod = [64, 16]               # Capas ocultas encoder
+estructura_encod = [ 64, 16, 2]               # Capas ocultas encoder
 estructura_decod = estructura_encod[::-1]      # Capas ocultas decoder
 
-lista_act_encod = [F.leaky_relu , F.elu, F.leaky_relu]  # Funciones activacion encoder (None = [None,...,None] por defecto lineal en MLP)
-lista_act_decod = [ F.elu, F.leaky_relu] + [None] # Funciones activacion encoder (None = [None,...,None] por defecto lineal en MLP)
+lista_act_encod = [F.elu , F.leaky_relu] +[None] # Funciones activacion encoder (None = [None,...,None] por defecto lineal en MLP)
+lista_act_decod = [ F.leaky_relu, F.elu] + [None] # Funciones activacion encoder (None = [None,...,None] por defecto lineal en MLP)
 
 
 if __name__ == "__main__":
