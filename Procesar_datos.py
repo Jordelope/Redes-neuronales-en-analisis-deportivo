@@ -30,7 +30,7 @@ mapping_pos_onehot = {
 def filtrar_repetidos(df):
         resultado = []
         if "Team" in df.columns:
-            for nombre, grupo in df.groupby("Player"):
+            for nombre, grupo in df.groupby("Player-additional"):
                 total_row_2 = grupo[grupo["Team"] == "2TM"]
                 total_row_3 = grupo[grupo["Team"] == "3TM"] # Revisar esto no falle
                 total_row_4 = grupo[grupo["Team"] == "4TM"] # Revisar esto no falle

@@ -3,7 +3,7 @@ import torch.nn.functional as F
 from MLP import MLP
 from Autoencoder import Autoencoder 
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Procesar_datos import procesar_datos
+from Procesar_datos_avanzado import procesar_datos
 
 
 
@@ -12,20 +12,22 @@ from Procesar_datos import procesar_datos
 
 
 ## DATOS de red a entrenar ##
-
-archivo_encod = r"redes_disponibles\encod_nba1.json" 
-archivo_decod = r"redes_disponibles\decod_nba1.json" 
-archivo_autoencoder =r"redes_disponibles\autoencoder_nba2_mejoras.json" 
+archivo_AE_emb = r"redes_disponibles\finales\overcomplete\AE_over_shtgStatPG.json"
+archivo_encod = r"" 
+archivo_decod = r"" 
+archivo_autoencoder =r"redes_disponibles\finales\AE_redDim2_dimIN80_.json" 
+tipo_estadisticas = "tiro"
 
 ## HIPERPARAMETROS de entrenamiento ##
 
-stp_n = 30000     # Número de pasos de entrenamiento
-stp_sz = 0.0025   # Tamaño del paso (learning rate)
-batch_sz = 32  # Tamaño del batch (por defecto si es None, todo el dataset)
+stp_n = 10000     # Número de pasos de entrenamiento
+stp_sz = 0.001   # Tamaño del paso (learning rate)
+batch_sz = 64  # Tamaño del batch (por defecto si es None, todo el dataset)
 
 loss_f = F.mse_loss # Función de pérdida
-beta = 1e-5
-lambda_l2 = 1e-5
+beta_l1 = 0.0
+beta_kl = 0.0
+lambda_l2 = 1e-4
 
 ## OPCIONES de guardado ##
 
@@ -34,28 +36,21 @@ override_guardado = False   # En caso de True: se guarda aunque no mejore el err
 
 sobreescribir_submodelos = False # En caso de True: Se sobreescriben archivos de encoder y decoder.
 
-descripcion = f" Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz} y valores beta={beta}, lambda_l2={lambda_l2}.\n Establecemos umbrales de 8mpg y 20pj."
+descripcion = f" Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz} y valores beta_l1={beta_l1},beta_kl={beta_kl}, lambda_l2={lambda_l2}."
 añadir_descripcion = True # Añade a la descripcion ya existente
 sustituir_desc = False    # CUIDADO, SI TRUE ELIMINA LA DESCRIPCIÓN YA EXISTENTE
 añadir_info_mejora = True # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
 
+ae_emb = cargar_modelo(archivo_AE_emb)
+encod_emb = ae_emb.encoder
 
-archivo_entrenamiento = r"datasets\nba\combined19_25_pergame_filtered.csv"
-archivo_test = r"datasets\equipos\roster_hawks_pergame_25.csv" # Seria ideal poner de test datos que no hubiera visto
-xs_train, ys_train, etiquetas_train, xs_test, ys_test, etiquetas_test = procesar_datos(archivo_set_train=archivo_entrenamiento,
-                                                                                    archivo_set_test=archivo_test,
-                                                                                    modo_autoencoder=True,
-                                                                                    modo_columnas="solo_volumen",
-                                                                                    modo_targets="pos",
-                                                                                    modo_etiquetado="posicion",
-                                                                                    normalizar_datos=True,
-                                                                                    modo_normalizacion="zscore",
-                                                                                    umbral_partidos=20,
-                                                                                    umbral_minutos=8,
-                                                                                    umbral_en_test=True,
-                                                                                    hay_fila_total_entrenamiento=False,
-                                                                                    hay_fila_total_test=True)
-
+archivo_entrenamiento = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
+archivo_test = r"datasets\nba\finales\test_per100_nba18_19.csv" 
+xs_orig, etiquetas_emb = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
+xs_train = encod_emb(xs_orig).detach()
+xs_test_orig, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
+xs_test = encod_emb(xs_test_orig).detach()
+ys_test = xs_test
 
 
 
@@ -91,7 +86,7 @@ if __name__ == "__main__":
 
     ## ENTRENAMIENTO ##
     print(f"\nIniciamos entrenamiento de {stp_n} pasos de el modelo '{archivo_autoencoder}'.\n") 
-    NN.train_model(xs_train,stp_n,stp_sz,loss_f,batch_sz)
+    NN.train_model(xs_train,stp_n,stp_sz,loss_f,batch_sz,beta_l1,beta_kl,lambda_l2)
 
 
     ## ERROR FINAL sobre el test ##

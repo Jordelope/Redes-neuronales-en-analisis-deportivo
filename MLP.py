@@ -45,11 +45,13 @@ nombre_a_func = {
     "log_softmax": F.log_softmax,
     "tanh": torch.tanh,
     "sigmoid": torch.sigmoid,
+    "leaky_relu": F.leaky_relu,
+    "elu": F.elu,
     "cross_entropy": F.cross_entropy,
     "binary_cross_entropy": F.binary_cross_entropy,
     "mse_loss": F.mse_loss,
     "none": None
-    }
+}
 
 ## Capa de neuronas ##
 
@@ -162,7 +164,7 @@ class MLP:
     def train_model(self, 
                     training_data : list[torch.Tensor], target_vector : list[torch.Tensor], 
                     n_steps : int, stp_sz : float , 
-                    loss_f : callable = F.cross_entropy, 
+                    loss_f : callable = F.mse_loss, 
                     batch_size : int=None):
         """
         Entrena la red neuronal usando descenso de gradiente estocástico.
@@ -170,7 +172,7 @@ class MLP:
         - target_vector: lista de salidas esperadas.
         - n_steps: número de iteraciones de entrenamiento.
         - stp_sz: tamaño del paso (learning rate).
-        - loss_f: función de pérdida (por defecto cross_entropy de torch).
+        - loss_f: función de pérdida (por defecto MSE de torch).
         - batch_size: tamaño del lote (si None, usa todo el dataset).
 
         Para cada lote:
@@ -193,9 +195,9 @@ class MLP:
                 X_batch = torch.stack(X_batch)  # (B, dim_in)
                 if loss_f is F.cross_entropy:
                     # Y_batch: índices de clase
-                    #Y_batch = torch.tensor(Y_batch, dtype=torch.long)
+                    Y_batch = torch.tensor(Y_batch, dtype=torch.long)
                     Y_batch = torch.stack(Y_batch)
-                    pass
+                    
                 else:
                     Y_batch = torch.stack(Y_batch)
                 
