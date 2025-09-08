@@ -54,7 +54,7 @@ class Autoencoder:
     def train_model(self, training_data: list[torch.Tensor],
                     n_steps: int, step_sz: float,
                     loss_f: callable = F.mse_loss, batch_size: int = None,
-                    beta_l1: float = None, beta_kl: float=None, lambda_l2: float = None):
+                    beta_L1: float = None, beta_Kl: float=None, lambda_L2: float = None):
         """
         Entrena el autoencoder con:
         - Penalización L1 sobre la capa latente (sparsity).
@@ -68,9 +68,9 @@ class Autoencoder:
         
         # Valores si recibimos None
         batch_size = len(training_data) if batch_size is None else batch_size
-        beta_l1 = 0.0 if beta_l1 is None else beta_l1
-        beta_kl = 0.0 if beta_kl is None else beta_kl
-        lambda_l2 = 0.0 if lambda_l2 is None else lambda_l2
+        beta_l1 = 0.0 if beta_L1 is None else beta_L1
+        beta_kl = 0.0 if beta_Kl is None else beta_Kl
+        lambda_l2 = 0.0 if lambda_L2 is None else lambda_L2
         
 
         parameters = self.parameters()
@@ -111,7 +111,7 @@ class Autoencoder:
                 if beta_l1 > 0.0:
                     loss_l1 = torch.mean(torch.abs(encoded_batch))
                 else:
-                    loss_l1 = 0.0
+                    loss_l1 = torch.tensor(0.0, dtype=torch.float32)
 
                 # Sparsity por KL divergence
                 if beta_kl > 0.0:
@@ -122,13 +122,13 @@ class Autoencoder:
 
                     loss_kl = torch.sum(kl_div)  # sumar sobre todas las neuronas
                 else:
-                    loss_kl = 0.0
+                    loss_kl = torch.tensor(0.0, dtype=torch.float32)
 
                 # Regularización L2 sobre todos los parámetros
                 if lambda_l2 > 0.0:
                     loss_l2 = sum(torch.sum(w**2) for w in weights) / X_batch.size(0)
                 else:
-                    loss_l2 = 0.0
+                    loss_l2 = torch.tensor(0.0, dtype=torch.float32)
 
                 # Pérdida total
                 loss = loss_recon + beta_l1 * loss_l1 + beta_kl * loss_kl + lambda_l2 * loss_l2
@@ -143,18 +143,30 @@ class Autoencoder:
                 # --- Actualizacion perdida(log) ---
                 epoch_loss += loss.item()
                 epoch_recon += loss_recon.item()
-                epoch_l1 += loss_l1.item()
-                epoch_kl += loss_kl.item()
-                epoch_l2 += loss_l2.item()
+                if beta_L1 is not None:
+                    epoch_l1 += loss_l1.item()
+                if beta_Kl is not None:
+                    epoch_kl += loss_kl.item()
+                if lambda_L2 is not None:
+                    epoch_l2 += loss_l2.item()
                 num_batches += 1
 
             # Log
             if k % 50 == 0 or k == n_steps - 1:
                 avg_loss = epoch_loss / num_batches
                 avg_recon = epoch_recon / num_batches
-                avg_l1 = epoch_l1 / num_batches
-                avg_kl = epoch_kl / num_batches
-                avg_l2 = epoch_l2 / num_batches
+                if beta_L1 is not None:
+                    avg_l1 = epoch_l1 / num_batches
+                else:
+                    avg_l1 =torch.tensor(0.0, dtype=torch.float32)
+                if beta_Kl is not None:
+                    avg_kl = epoch_kl / num_batches
+                else:
+                    avg_l1 = torch.tensor(0.0, dtype=torch.float32)
+                if beta_L1 is not None:
+                    avg_l2 = epoch_l2 / num_batches
+                else:
+                    avg_l2 =torch.tensor(0.0, dtype=torch.float32)
                 print(f"Paso {k} | Loss total: {avg_loss:.6f} "
                     f"(Recon: {avg_recon:.6f}, L1: {avg_l1:.6f}, KL: {avg_kl:.6f}, L2: {avg_l2:.6f})")
                 

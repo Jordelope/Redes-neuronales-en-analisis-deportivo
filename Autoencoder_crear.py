@@ -27,7 +27,7 @@ descripcion = " Autoencoder undercomplete para tratar visualizar en 2 dim."
 input_sz = 80            # Número de entradas
 lat_spc_dim = 2         # Dimension espacio latente(salida encoder, entrada decoder) 
 
-estructura_encod = [ 64, 16, 2]               # Capas ocultas encoder
+estructura_encod = [ 64, 16]               # Capas ocultas encoder
 estructura_decod = estructura_encod[::-1]      # Capas ocultas decoder
 
 lista_act_encod = [F.elu , F.leaky_relu] +[None] # Funciones activacion encoder (None = [None,...,None] por defecto lineal en MLP)

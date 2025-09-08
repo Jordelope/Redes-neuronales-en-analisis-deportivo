@@ -12,22 +12,22 @@ from Procesar_datos_avanzado import procesar_datos
 
 
 ## DATOS de red a entrenar ##
-
+archivo_AE_emb = r"redes_disponibles\finales\overcomplete\AE_over_shtgStatPG.json"
 archivo_encod = r"" 
 archivo_decod = r"" 
-archivo_autoencoder =r"redes_disponibles\finales\undercomplete\AE_under_allgStatP100.json" 
-tipo_estadisticas = "completo"
+archivo_autoencoder =r"redes_disponibles\finales\AE_redDim2_dimIN80_.json" 
+tipo_estadisticas = "tiro"
 
 ## HIPERPARAMETROS de entrenamiento ##
 
-stp_n = 12000     # Número de pasos de entrenamiento
-stp_sz = 0.0015   # Tamaño del paso (learning rate)
-batch_sz = 128  # Tamaño del batch (por defecto si es None, todo el dataset)
+stp_n = 10000     # Número de pasos de entrenamiento
+stp_sz = 0.001   # Tamaño del paso (learning rate)
+batch_sz = 64  # Tamaño del batch (por defecto si es None, todo el dataset)
 
 loss_f = F.mse_loss # Función de pérdida
-beta_l1 = 0.002
-beta_kl = 0.002
-lambda_l2 = 5e-5
+beta_l1 = 0.0
+beta_kl = 0.0
+lambda_l2 = 1e-4
 
 ## OPCIONES de guardado ##
 
@@ -41,11 +41,15 @@ añadir_descripcion = True # Añade a la descripcion ya existente
 sustituir_desc = False    # CUIDADO, SI TRUE ELIMINA LA DESCRIPCIÓN YA EXISTENTE
 añadir_info_mejora = True # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
 
+ae_emb = cargar_modelo(archivo_AE_emb)
+encod_emb = ae_emb.encoder
 
 archivo_entrenamiento = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
 archivo_test = r"datasets\nba\finales\test_per100_nba18_19.csv" 
-xs_train, _ = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
-xs_test, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
+xs_orig, etiquetas_emb = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
+xs_train = encod_emb(xs_orig).detach()
+xs_test_orig, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
+xs_test = encod_emb(xs_test_orig).detach()
 ys_test = xs_test
 
 
