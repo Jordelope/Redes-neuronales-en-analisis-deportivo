@@ -19,10 +19,10 @@ Estructura general del script:
 - Incluye utilidades para decodificar la salida de la red y evaluar su precisión sobre el conjunto de test.
 
 """
-## Funciones relevantes ##
 
+## Nombre del nuevo modelo ##
 
-
+nombre_archivo_red = r"redes_disponibles\mlp_prueba_desc.json"  # Archivo donde se guarda la red
 
 
 ## ARQUITECTURA de la red ## (Prestar MUCHA ATENCION A FUNCIONES ACTIVACION)
@@ -32,41 +32,12 @@ estructura_oct = [18, 18]  # Capas ocultas
 lista_act = None           # Lista de funciones de activación (asegurar compatible con estructura oct)
                            #(None =[None,...,None] por defecto en MLP)
 
-nombre_archivo_red = r"redes_disponibles\mlp_prueba_desc.json"  # Archivo donde se guarda la red
 
-
-## OPCIONES GUARDADO Y ENTRENAMIENTO ##
+## OPCIONES GUARDADO  ##
 save_new_NN = True         # ¿Guardar la red tras crearla?
-entrenar_nueva_red = True  # ¿Entrenar la red tras crearla?
 
 añadir_descripcion = False  # Opción de añadir una descripción
 descripcion = ""
-
-
-## HIPERPARAMETROS de entrenamiento ##
-stp_n = 10  # Número de pasos de entrenamiento
-stp_sz = 0.00005 # Tamaño del paso (learning rate)
-batch_sz = None  # Tamaño del batch (None = por defecto, todo el dataset)
-
-loss_f = F.mse_loss # Función de pérdida
-
-
-## Cargamos los datos de entrenamiento ##
-archivo_entrenamiento = "datasets/nba_pergame_24_full.csv"
-archivo_test = "datasets/nba_pergame_24_full.csv"
-xs_train, ys_train, etiquetas_train, xs_test, ys_test, etiquetas_test = procesar_datos(archivo_set_train=archivo_entrenamiento,
-                                                                                    archivo_set_test=archivo_test,
-                                                                                    modo_autoencoder=False,
-                                                                                    modo_columnas="solo_volumen",
-                                                                                    modo_targets="pos",
-                                                                                    modo_etiquetado="posicion",
-                                                                                    normalizar_datos=True,
-                                                                                    modo_normalizacion="zscore",
-                                                                                    umbral_partidos=5,
-                                                                                    umbral_minutos=5,
-                                                                                    umbral_en_test=True,
-                                                                                    hay_fila_total_entrenamiento=False,
-                                                                                    hay_fila_total_test=True)
 
 
 
@@ -83,30 +54,6 @@ if __name__ == "__main__":
         print(f"\nAVISO: La red {nombre_archivo_red} se va a guardar.\n")
     else:
         print(f"\nAVISO: La red {nombre_archivo_red} no se va a guardar.\n")
-
-    if entrenar_nueva_red:
-        print(f"AVISO: La red {nombre_archivo_red} se va a entrenar.\n")
-    else:
-        print(f"AVISO: La red {nombre_archivo_red} no se va a entrenar.\n")
-
-    # Entrenamiento de la red
-    if entrenar_nueva_red:
-
-        ## ERROR INICIAL sobre el test ##
-        with torch.no_grad():
-            pred_test_init = NN(xs_test)
-            loss_init = loss_f(pred_test_init,ys_test)
-        print(f"\nLa red '{nombre_archivo_red}' tiene una perdida inicial sobre el test: {loss_init.detach().numpy()}.\n")
-
-        ## ENTRENAMIENTO ##
-        print(f"\nIniciamos entrenamiento de {stp_n} pasos de la red '{nombre_archivo_red}'.\n")
-        NN.train_model(xs_train, ys_train, stp_n, stp_sz, loss_f, batch_sz)
-
-        ## ERROR FINAL sobre el test ##
-        with torch.no_grad():
-            pred_test_fin = NN(xs_test)
-            loss_final = loss_f(pred_test_fin,ys_test)
-        print(f"\nLa red '{nombre_archivo_red}' tiene una perdida final sobre el test: {loss_final}.\n")
 
     # Guardado de la red
     if añadir_descripcion:
