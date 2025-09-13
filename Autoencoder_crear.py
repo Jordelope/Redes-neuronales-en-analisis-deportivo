@@ -4,23 +4,24 @@ import random
 from MLP import MLP
 from Autoencoder import Autoencoder
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Procesar_datos import procesar_datos
+
 
 
 ## NOMBRE archivos (se tomaran los MLP si ya los tenemos) ##
-existen_MLP = False
+archivo_autoencoder = r""
+existen_MLP = False       # En caso de True se importaran el encoder y decoder de archivos ya existentes.
 archivo_encod = r"" 
 archivo_decod = r"" 
-archivo_autoencoder = r"redes_disponibles\finales\AE_redDim2_dimIN80_.json" 
+ 
 
 
-## OPCIONES de entrenado y guardado ##
-save_autoencoder = True
-save_decoder = False
-save_encoder = False
+## OPCIONES de guardado ##
+save_autoencoder = True         # En caso de True guarda el Autoencoder
+save_decoder = False            # En caso de True guarda el decoder en un fichero por separado
+save_encoder = False            # En caso de True guarda el encoder en un fichero por separado
 
-añadir_descripcion = True  # Opción de añadir una descripción
-descripcion = " Autoencoder undercomplete para tratar visualizar en 2 dim."
+añadir_descripcion = True        # Opción de añadir una descripción
+descripcion = " "                # No añadir acentos ni "ñ" u otros simbolos parecidos
 
 ## ESTRUCTURA autoencoder (si no tenemos los MLP) ##
 

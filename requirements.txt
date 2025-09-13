@@ -1,3 +1,9 @@
+# Requisitos principales para el proyecto de redes neuronales
 torch
-pandas
 numpy
+pandas
+scikit-learn
+matplotlib
+umap-learn
+adjustText
+

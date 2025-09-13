@@ -2,9 +2,9 @@ import torch
 import torch.nn.functional as F
 from MLP import MLP 
 from Autoencoder import Autoencoder 
-from Clasificador import Clasificador 
+from Red_clasificador.Clasificador import Clasificador 
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Procesar_datos import procesar_datos
+from Desactualizado.Procesar_datos import procesar_datos
 
 """
 

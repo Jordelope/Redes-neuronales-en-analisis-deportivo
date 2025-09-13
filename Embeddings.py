@@ -4,7 +4,7 @@ import numpy as np
 from MLP import MLP
 from Autoencoder import Autoencoder
 from Guardar_Cargar import cargar_modelo
-from Procesar_datos_avanzado import procesar_datos, filtrar_repetidos
+from Procesar_datos_avanzado import procesar_datos
 
 # ---------- Nombre archivos ----------
 autoencoder_path = r"redes_disponibles\finales\overcomplete\AE_over_allStatPG.json"  # archivo  del autoencoder
@@ -52,5 +52,6 @@ def cargar_embeddings(csv_file):
     return embeddings_dict
 
 
+#---------------------------------------------------------------------------------------------------------------------------------------------------
 if __name__=="__main__":
     generar_embeddings(autoencoder_path,players_path,embeddings_path,modo_stats)

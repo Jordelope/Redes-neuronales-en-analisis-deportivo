@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     #dict_emb = generar_embeddings(archivo_AE,archivo_scout,archivo_emb,modo_stats)
     
-    #dict_clust = clustering_embeddings(archivo_emb,numero_clusters,archivo_clust,guardar_grafico=True,archivo_grafico=archivo_graf)
+    dict_clust = clustering_embeddings(archivo_emb,numero_clusters,archivo_clust,guardar_grafico=True,archivo_grafico=archivo_graf)
 
     clusterizar_pca(archivo_scout,modo_stats,numero_clusters,n_components=2)
 

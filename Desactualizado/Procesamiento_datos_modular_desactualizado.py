@@ -3,45 +3,12 @@ import numpy as np
 import torch
 
 
-## Eleccion datasets ##
-datasets = ["datasets/nba_pergame_24y25.csv",
-            "datasets/nba_pergame_25_full.csv",
-            "datasets/nba_pergame_24_full.csv",
-            "datasets/roster_hawks_pergame_25.csv",
-            "datasets/roster_celtics_pergame_25.csv",
-            "datasets/roster_knicks_pergame_25.csv",
-            "datasets/roster_lakers_pergame_24.csv",
-            "datasets/roster_clippers_pergame_24.csv",
-            "datasets/roster_warrior_pergame_24.csv",
-            "datasets/roster_kings_pergame_24.csv",
-            "datasets/roster_thunder_pergame_24.csv"]
-
-nombre_set_entrenamiento = "datasets/nba_pergame_24_full.csv"
-nombre_set_test = "datasets/nba_pergame_24_full.csv"
-
-## PARAMETROS a ajustar ##
-
-hacer_prints = False
-
-modo_autoencoder = False # El autoencoder usara entrada=salida
-
-hay_fila_totales_entrenamiento = False
-hay_fila_totales_test = True
-
-quitar_ruido_test = False
-
 modos_posibles =["completo", "solo_volumen", "eficiencia_pura", "reducido"]
-modo_columnas = "solo_volumen"
 
-umbral_partidos = 10 # min partidos para filtrar ruido
-umbral_minutos = 10  # min minutos para filtrar ruido
-
-normalizar_datos = True
 modos_norm_posibles = ["zscore", "minmax"]
-modo_normalizacion = "zscore"
 
 modos_etiquetado = ["posicion"]
-modo_etiquetado = "posicion"
+
 
 def procesar_datos(
     nombre_set_entrenamiento,
@@ -200,27 +167,3 @@ def procesar_datos(
 
     return X_train_tensor, Y_train_tensor, X_test_tensor, Y_test_tensor, etiquetas_train, etiquetas_test
 
-
-Xs_entrenamiento_def, Ys_entrenamiento_def, Xs_test_def, Ys_test_def, etiquetas_entrenamiento, etiquetas_test = procesar_datos(     nombre_set_entrenamiento,
-                                                                                                                                    nombre_set_test,
-                                                                                                                                    modo_columnas,
-                                                                                                                                    modo_etiquetado,
-                                                                                                                                    modo_normalizacion,
-                                                                                                                                    normalizar_datos,
-                                                                                                                                    modo_autoencoder,
-                                                                                                                                    hacer_prints,
-                                                                                                                                    umbral_partidos,
-                                                                                                                                    umbral_minutos,
-                                                                                                                                    hay_fila_totales_entrenamiento,
-                                                                                                                                    hay_fila_totales_test,
-                                                                                                                                    quitar_ruido_test
-                                                                                                                                )
-
-
-
-"""
-POSIBLES MEJORAS: 
--> AÑADIR ETIQUETADO (PARA ENTRENAMIENTO Y/O VISUALIZACION) YA SEA POR POSICIONES O OTRO TIPO DE CLASIFICACIO
--> PUEDEN SER INTERESANTES LOS DATOS DE ALTURA Y WINGSPAN (DICEN MUCHO DE UN JUGADOR)
-
-"""

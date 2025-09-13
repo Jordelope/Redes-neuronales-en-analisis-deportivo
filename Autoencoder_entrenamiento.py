@@ -12,37 +12,42 @@ from Procesar_datos_avanzado import procesar_datos
 
 
 ## DATOS de red a entrenar ##
-archivo_AE_emb = r"redes_disponibles\finales\overcomplete\AE_over_shtgStatPG.json"
+archivo_autoencoder =r""                    # Nombre del autoencoder que se quiere entrenar
+archivo_AE_ref = r""                        # Nombre del autoencoder de referencia (si se quiere entrenar sobre embeddings)
 archivo_encod = r"" 
 archivo_decod = r"" 
-archivo_autoencoder =r"redes_disponibles\finales\AE_redDim2_dimIN80_.json" 
-tipo_estadisticas = "tiro"
+ 
 
 ## HIPERPARAMETROS de entrenamiento ##
 
-stp_n = 10000     # Número de pasos de entrenamiento
-stp_sz = 0.001   # Tamaño del paso (learning rate)
-batch_sz = 64  # Tamaño del batch (por defecto si es None, todo el dataset)
+stp_n = 10000          # Número de pasos de entrenamiento
+stp_sz = 0.001         # Tamaño del paso (learning rate)
+batch_sz = 64          # Tamaño del batch (por defecto si es None, todo el dataset)
 
-loss_f = F.mse_loss # Función de pérdida
+loss_f = F.mse_loss    # Función de pérdida
 beta_l1 = 0.0
 beta_kl = 0.0
 lambda_l2 = 1e-4
 
 ## OPCIONES de guardado ##
 
-save_after_training = True  # En caso de True: se guarda cuando mejora el error respecto 
-override_guardado = False   # En caso de True: se guarda aunque no mejore el error (si el anterior es True)
+save_after_training = True             # En caso de True: se guarda cuando mejora el error respecto 
+override_guardado = False              # En caso de True: se guarda aunque no mejore el error (si el anterior es True)
 
-sobreescribir_submodelos = False # En caso de True: Se sobreescriben archivos de encoder y decoder.
+sobreescribir_submodelos = False       # En caso de True: Se sobreescriben archivos de encoder y decoder.
 
 descripcion = f" Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz} y valores beta_l1={beta_l1},beta_kl={beta_kl}, lambda_l2={lambda_l2}."
-añadir_descripcion = True # Añade a la descripcion ya existente
-sustituir_desc = False    # CUIDADO, SI TRUE ELIMINA LA DESCRIPCIÓN YA EXISTENTE
-añadir_info_mejora = True # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
+añadir_descripcion = True          # Añade a la descripcion ya existente
+sustituir_desc = False             # CUIDADO, SI TRUE ELIMINA LA DESCRIPCIÓN YA EXISTENTE
+añadir_info_mejora = True          # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
 
-ae_emb = cargar_modelo(archivo_AE_emb)
+
+
+
+## Datos de entrenamiento ##
+ae_emb = cargar_modelo(archivo_AE_ref)
 encod_emb = ae_emb.encoder
+tipo_estadisticas = "tiro"
 
 archivo_entrenamiento = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
 archivo_test = r"datasets\nba\finales\test_per100_nba18_19.csv" 
