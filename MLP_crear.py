@@ -8,15 +8,12 @@ from Procesar_datos import procesar_datos
 crear_red_torch.py
 -------------------
 
-Este script permite crear, entrenar y guardar una red neuronal multicapa (MLP) utilizando la implementación matemática definida en el módulo MLP.py.
-El usuario puede definir la arquitectura de la red, los parámetros de entrenamiento y decidir si desea entrenar y/o guardar la red resultante en un archivo JSON.
+Este script permite crear y guardar una red neuronal multicapa (MLP) utilizando la implementación matemática definida en el módulo MLP.py.
+El usuario puede definir la arquitectura de la red  y decidir si desea guardar la red resultante en un archivo JSON.
 
 Estructura general del script:
-- Carga los datos de entrenamiento y test desde procesar_datos_entrenamiento.py.
 - Permite definir la arquitectura y funciones de activación de la red MLP.
-- Permite entrenar la red con los parámetros elegidos (número de pasos, tamaño de batch, función de pérdida, etc).
 - Permite guardar la red (estructura y pesos) en un archivo JSON para su posterior uso.
-- Incluye utilidades para decodificar la salida de la red y evaluar su precisión sobre el conjunto de test.
 
 """
 
