@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import random
 from MLP import MLP
 from Guardar_Cargar import guardar_modelo
-from Procesar_datos import procesar_datos
+
 """
 crear_red_torch.py
 -------------------

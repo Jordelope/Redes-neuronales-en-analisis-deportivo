@@ -4,7 +4,7 @@ import random
 from MLP import MLP
 from Autoencoder import Autoencoder
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Procesar_datos import procesar_datos
+
 
 
 ## NOMBRE archivos (se tomaran los MLP si ya los tenemos) ##

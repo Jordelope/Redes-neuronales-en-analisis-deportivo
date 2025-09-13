@@ -1,6 +1,6 @@
 from MLP import MLP
 from Autoencoder import Autoencoder
-from Clasificador import Clasificador
+from Red_clasificador.Clasificador import Clasificador
 from Guardar_Cargar import guardar_modelo, cargar_modelo
 
 """

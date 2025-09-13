@@ -1,14 +1,9 @@
 import torch
 import torch.nn.functional as F
-import random
 from MLP import MLP
 from Guardar_Cargar import cargar_modelo, guardar_modelo
-from Procesar_datos import procesar_datos
-
-## Funciones relevantes ##
-def clasificacion(xs):
-    return xs.argmax().item()  # Devuelve el índice de la clase con mayor probabilidad
-
+from Desactualizado.Procesar_datos import procesar_datos
+from Funciones_relevantes import clasificacion
 
 ## MODELO a entrenar ##
 
@@ -16,21 +11,21 @@ nombre_archivo_red = r"redes_disponibles\mlp_prueba_desc.json"  # Archivo donde 
 
 
 ## HIPERPARAMETROS de entrenamiento ##
-stp_n = 5     # Número de pasos de entrenamiento
-stp_sz = 0.001    # Tamaño del paso (learning rate)
-batch_sz = None  # Tamaño del batch (por defecto, todo el dataset)
+stp_n = 5                  # Número de pasos de entrenamiento
+stp_sz = 0.001             # Tamaño del paso (learning rate)
+batch_sz = None            # Tamaño del batch (por defecto, todo el dataset)
 
-loss_f = F.mse_loss # Funcion de perdida
+loss_f = F.mse_loss        # Funcion de perdida
 
 
 ## OPCIONES de guardado ##  
-save_after_training = True  # En caso de True: se guarda cuando mejora el error respecto 
-override_guardado = True   # En caso de True: se guarda aunque no mejore el error (si el anterior es True)
+save_after_training = True           # En caso de True: se guarda cuando mejora el error respecto 
+override_guardado = True             # En caso de True: se guarda aunque no mejore el error (si el anterior es True)
 
 descripcion = f"Entrenamiento de {stp_n} pasos de tamano {stp_sz} con funcion de perdida {loss_f.__name__} en batches de {batch_sz}."
 añadir_descripcion = True
-sustituir_desc = False # CUIDADO, ELIMINA LA DESCRIPCIÓN ANTERIOR
-añadir_info_mejora = True # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
+sustituir_desc = False             # CUIDADO, ELIMINA LA DESCRIPCIÓN ANTERIOR
+añadir_info_mejora = True          # Añade informacion de como ha mejorado/empeorado el modelo sobre el test dado
 
 ## DATOS de test y entrenamiento ##
 archivo_entrenamiento = "datasets/nba_pergame_24_full.csv"

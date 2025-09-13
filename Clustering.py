@@ -88,7 +88,7 @@ def clusterizar_pca(csv_file, tipo_stats="completo", n_clusters=5, n_components=
     for i, jugador in enumerate(etiquetas["Player"]):
         plt.text(X_pca[i, 0] + 0.02, X_pca[i, 1] + 0.02, jugador, fontsize=7)
 
-    plt.title(f"Clusters con PCA (k={n_clusters}, tipo_stats={tipo_stats})")
+    plt.title(f"Clusters sobre las estadisticas, graficados con PCA (k={n_clusters}, tipo_stats={tipo_stats})")
     plt.xlabel("PC1")
     plt.ylabel("PC2")
     plt.colorbar(scatter, label="Cluster")
@@ -132,7 +132,7 @@ def clustering_autoencoder(archivo_modelo, embeddings_path, n_clusters=5):
     for i, jugador in enumerate(jugadores):
         plt.text(X_encoded[i, 0] + 0.02, X_encoded[i, 1] + 0.02, jugador, fontsize=7)
 
-    plt.title(f"Clusters sobre embeddings originales, graficados con encoder (k={n_clusters})")
+    plt.title(f"Clusters sobre embeddings, graficados con encoder. (k={n_clusters})")
     plt.xlabel("Dim 1")
     plt.ylabel("Dim 2")
     plt.colorbar(scatter, label="Cluster")
@@ -192,3 +192,4 @@ def graficar_clusters(archivo_clusters, archivo_embeddings, archivo_grafico=None
 if __name__=="__main__":
 
     clustering_autoencoder(autoencoder_redDim,player_embeddings,10)
+    clusterizar_pca(r"datasets\nba\finales\scout_pergame_nba24_25.csv","tiro",10)

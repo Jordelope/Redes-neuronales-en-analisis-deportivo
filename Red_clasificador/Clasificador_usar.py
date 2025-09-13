@@ -3,9 +3,9 @@ import torch.nn.functional as F
 import numpy
 from MLP import MLP, nombre_a_func
 from Autoencoder import Autoencoder 
-from Clasificador import Clasificador 
+from Red_clasificador.Clasificador import Clasificador 
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Procesar_datos import procesar_datos
+from Desactualizado.Procesar_datos import procesar_datos
 from Visual import visual
 
 
