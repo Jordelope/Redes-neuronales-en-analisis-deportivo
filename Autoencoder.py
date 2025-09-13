@@ -2,10 +2,10 @@ import torch
 import torch.nn.functional as F
 from MLP import MLP, get_batches, guardar_MLP, cargar_MLP, nombre_a_func
 
-
-
-
-
+"""
+Este modulo implemnta la estructura de red neuronal de un Autoencoder y las funciones necesarias para guardarlo y cargarlo desde un fichero de tipo .json .
+Hace uso de la clase MLP para su encoder y decoder.
+"""
 
 class Autoencoder:
     """
@@ -25,9 +25,7 @@ class Autoencoder:
             self.encoder.description = "Encoder"
         if self.decoder.description == "MLP":
             self.decoder.description = "Decoder"
-
-
-            
+       
     def add_descript(self, text:str):
         self.description += "\n " + text
     
