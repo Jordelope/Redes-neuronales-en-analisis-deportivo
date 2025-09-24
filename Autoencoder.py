@@ -1,11 +1,29 @@
-import torch
-import torch.nn.functional as F
-from MLP import MLP, get_batches, guardar_MLP, cargar_MLP, nombre_a_func
+"""
+Autoencoder.py
+--------------
+
+Este módulo implementa la clase Autoencoder utilizando como bloques básicos modelos de la clase MLP definidos en este proyecto.
+
+Estructura principal:
+- La clase `Autoencoder` está compuesta por dos redes MLP: un encoder y un decoder.
+- El encoder transforma la entrada en una representación comprimida (espacio latente).
+- El decoder reconstruye la entrada original a partir de la representación latente.
+- Se incluyen métodos para entrenamiento con regularización L1 (sparsity), divergencia KL y regularización L2 sobre los pesos.
+- Permite guardar y cargar autoencoders en formato JSON, almacenando arquitectura, funciones de activación y pesos.
+
+Funcionamiento general:
+1. Se definen dos modelos MLP: uno para el encoder y otro para el decoder.
+2. El método `__call__` propaga la entrada por el encoder y luego por el decoder.
+3. El método `train_model` permite entrenar el autoencoder con diferentes penalizaciones y regularizaciones.
+4. Los métodos `guardar_autoencoder` y `cargar_autoencoder` permiten persistir y restaurar modelos completos.
 
 """
-Este modulo implemnta la estructura de red neuronal de un Autoencoder y las funciones necesarias para guardarlo y cargarlo desde un fichero de tipo .json .
-Hace uso de la clase MLP para su encoder y decoder.
-"""
+
+
+import torch
+import torch.nn.functional as F
+from MLP import MLP 
+from Funciones_relevantes import get_batches, nombre_a_func
 
 class Autoencoder:
     """

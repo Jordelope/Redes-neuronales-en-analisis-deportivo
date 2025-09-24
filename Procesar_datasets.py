@@ -1,3 +1,11 @@
+"""
+Procesar_datasets.py
+--------------------
+
+Este script contiene funciones utilitarias para combinar, completar y filtrar datasets de la NBA provenientes de diferentes fuentes y temporadas.
+Permite preparar archivos de entrenamiento y test unificados, gestionando duplicados, columnas repetidas y uniendo estadísticas tradicionales, avanzadas y de tiro.
+Su uso es fundamental para la preparación de datos antes de entrenar modelos de machine learning sobre estadísticas de jugadores NBA.
+"""
 import pandas as pd
 import re
 

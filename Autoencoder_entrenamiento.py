@@ -1,3 +1,18 @@
+"""
+Autoencoder_entrenamiento.py
+---------------------------
+
+Este script permite entrenar modelos de la clase Autoencoder sobre datos de la NBA, con el objetivo de generar embeddings de jugadores y analizarlos posteriormente.
+Puede entrenar un autoencoder directamente sobre los datos originales o sobre embeddings generados por otro autoencoder de referencia (archivo_AE_ref), lo que resulta útil para tareas como reducción de dimensionalidad o análisis jerárquico de representaciones.
+
+Funcionalidad principal:
+- Carga un autoencoder y, opcionalmente, un autoencoder de referencia para obtener embeddings.
+- Procesa los datos de entrenamiento y test, generando los tensores de entrada adecuados.
+- Permite configurar hiperparámetros de entrenamiento y opciones de guardado.
+- Realiza el entrenamiento del autoencoder y evalúa la mejora sobre el conjunto de test.
+- Permite guardar el modelo actualizado y, opcionalmente, sus submodelos encoder y decoder.
+
+"""
 import torch
 import torch.nn.functional as F
 from MLP import MLP
@@ -6,17 +21,13 @@ from Guardar_Cargar import guardar_modelo, cargar_modelo
 from Procesar_datos_avanzado import procesar_datos
 
 
-
-## Funciones relevantes ##
-
-
-
 ## DATOS de red a entrenar ##
 archivo_autoencoder =r""                    # Nombre del autoencoder que se quiere entrenar
 archivo_AE_ref = r""                        # Nombre del autoencoder de referencia (si se quiere entrenar sobre embeddings)
 archivo_encod = r"" 
 archivo_decod = r"" 
- 
+
+entrenar_sobre_AE_ref = False               # En caso de True: se entrenara el autoencoder obre los embeddings de referencia
 
 ## HIPERPARAMETROS de entrenamiento ##
 
@@ -45,18 +56,14 @@ añadir_info_mejora = True          # Añade informacion de como ha mejorado/emp
 
 
 ## Datos de entrenamiento ##
-ae_emb = cargar_modelo(archivo_AE_ref)
-encod_emb = ae_emb.encoder
-tipo_estadisticas = "tiro"
+
+tipo_estadisticas = "tiro" # Tipo de estadísticas a utilizar 
 
 archivo_entrenamiento = r"datasets\nba\finales\nba19_24_per100_entrenamiento.csv"
 archivo_test = r"datasets\nba\finales\test_per100_nba18_19.csv" 
-xs_orig, etiquetas_emb = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
-xs_train = encod_emb(xs_orig).detach()
-xs_test_orig, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
-xs_test = encod_emb(xs_test_orig).detach()
-ys_test = xs_test
 
+xs_orig, etiquetas_emb = procesar_datos(archivo_entrenamiento,tipo_estadisticas)
+xs_test_orig, etiquetas_test = procesar_datos(archivo_test,tipo_estadisticas)
 
 
 #------------------------------------------------------------------------------------------------------------------------------------
@@ -64,12 +71,28 @@ ys_test = xs_test
 
 if __name__ == "__main__":
     
-    ## CARGAR red ##
+    ## CARGAR redes ##
     print(f"\nSe va entrenar el modelo '{archivo_autoencoder}'.")
     NN = cargar_modelo(archivo_autoencoder)
+    
+    if entrenar_sobre_AE_ref:
+        ae_emb = cargar_modelo(archivo_AE_ref)
+        encod_emb = ae_emb.encoder
+
+        xs_train = encod_emb(xs_orig).detach()
+        xs_test  =  encod_emb(xs_test_orig).detach()
+        ys_test  = xs_test
+    
+    else:
+        xs_train = xs_orig
+        xs_test  = xs_test_orig
+        ys_test  = xs_test
+    
 
     ## AVISOS ##
     if  save_after_training:
+        if entrenar_sobre_AE_ref:
+            print(f"\nAVISO: El modelo '{archivo_autoencoder}' se va a entrenar sobre el Autoencoder de referencia {archivo_AE_ref}.")
         if override_guardado:
             print(f"\nAVISO: El modelo '{archivo_autoencoder}' se va a guardar aunque empeore el error.")
         else:

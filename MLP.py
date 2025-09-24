@@ -7,13 +7,11 @@ Aquí se definen las clases y funciones necesarias para construir, entrenar, gua
 de alto nivel de PyTorch (como nn.Module), para facilitar la comprensión de los fundamentos matemáticos.
 
 Estructura principal del código:
-- get_batches: Generador de lotes aleatorios para entrenamiento por lotes.
-- Neuron: Implementa una neurona individual con pesos y sesgo.
 - Layer: Implementa una capa de neuronas.
 - MLP: Implementa una red neuronal multicapa compuesta por varias capas.
 - guardar_red / cargar_red: Permiten guardar y cargar redes entrenadas en archivos JSON.
 
-Las clases están relacionadas jerárquicamente: un MLP contiene varias Layer, y cada Layer contiene varias Neuron.
+Las clases están relacionadas jerárquicamente: un MLP contiene varias Layer.
 """
 
 import torch

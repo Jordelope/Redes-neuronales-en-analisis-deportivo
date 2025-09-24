@@ -6,7 +6,7 @@ from Autoencoder import Autoencoder
 from Red_clasificador.Clasificador import Clasificador 
 from Guardar_Cargar import guardar_modelo, cargar_modelo
 from Desactualizado.Procesar_datos import procesar_datos
-from Visual import visual
+from Desactualizado.Visual import visual
 
 
 """

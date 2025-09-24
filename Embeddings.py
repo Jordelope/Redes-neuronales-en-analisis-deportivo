@@ -1,3 +1,12 @@
+"""
+Embeddings.py
+-------------
+
+Este script permite generar embeddings de jugadores de la NBA utilizando el encoder de un autoencoder previamente entrenado.
+Procesa los datos de los jugadores, obtiene su representación latente (embedding) y guarda el resultado en un archivo CSV.
+Incluye funciones para cargar los embeddings desde CSV y devolverlos en formato diccionario. 
+"""
+
 import torch
 import pandas as pd
 import numpy as np
@@ -5,13 +14,6 @@ from MLP import MLP
 from Autoencoder import Autoencoder
 from Guardar_Cargar import cargar_modelo
 from Procesar_datos_avanzado import procesar_datos
-
-# ---------- Nombre archivos ----------
-autoencoder_path = r"redes_disponibles\finales\overcomplete\AE_over_allStatPG.json"  # archivo  del autoencoder
-players_path = r"datasets\nba\finales\scout_pergame_nba24_25.csv"            # CSV con datos de los jugadores
-embeddings_path = r"embeddings\emb_scout24_25_allStatPG_overcomplete.csv"  # archivo CSV de salida
-
-modo_stats = "completo"
 
 
 def generar_embeddings( autoencoder_path,
@@ -51,7 +53,3 @@ def cargar_embeddings(csv_file):
         embeddings_dict[jugador] = embedding
     return embeddings_dict
 
-
-#---------------------------------------------------------------------------------------------------------------------------------------------------
-if __name__=="__main__":
-    generar_embeddings(autoencoder_path,players_path,embeddings_path,modo_stats)

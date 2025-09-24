@@ -1,27 +1,10 @@
 import torch
 import torch.nn.functional as F
-from MLP import MLP, cargar_MLP, guardar_MLP, nombre_a_func
-from Autoencoder import Autoencoder, cargar_autoencoder, guardar_autoencoder
+from MLP import MLP 
+from Autoencoder import Autoencoder 
+from Funciones_relevantes import onehot_to_long, nombre_a_func
 
 ## Funciones relevantes ##
-
-def onehot_to_long(targets: torch.Tensor) -> torch.Tensor:
-    """
-    Para cuando se use F.cross_entropy.
-    Detecta si los targets están en formato one-hot y los convierte a índices de clase (long).
-    Si ya están en formato entero, los deja tal cual.
-    """
-    if not isinstance(targets, torch.Tensor):
-        targets = torch.stack(targets)
-
-    # Verifica si es un tensor 2D y si cada fila tiene una única posición con valor 1
-    if targets.ndim == 2 and torch.all((targets.sum(dim=1) == 1)) and torch.all((targets == 0) | (targets == 1)):
-        # Es one-hot → convertir a índices
-        print("Los targets estaban en forma one-hot y se han transformado a long")
-        return torch.argmax(targets, dim=1).long()
-    else:
-        # Ya está en formato correcto o no es one-hot
-        return targets.long()
 
 
 class Clasificador:

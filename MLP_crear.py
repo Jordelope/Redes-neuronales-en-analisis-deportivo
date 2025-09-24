@@ -1,33 +1,41 @@
+"""
+MLP_crear.py
+------------
+
+Este script está diseñado para crear nuevos modelos de perceptrón multicapa (MLP) utilizando la clase MLP implementada desde cero en este proyecto.
+Permite definir la arquitectura de la red (número de entradas, salidas, capas ocultas y funciones de activación), instanciar el modelo y guardarlo en disco para su posterior entrenamiento o uso.
+
+Funcionalidad principal:
+- Configuración de la arquitectura del modelo MLP.
+- Instanciación de la red con los parámetros definidos.
+- Opción de añadir una descripción personalizada al modelo.
+- Guardado del modelo en un archivo especificado.
+
+Uso:
+1. Ajusta los parámetros de arquitectura y el nombre del archivo donde se guardará la red.
+2. Ejecuta el script para crear y guardar el modelo MLP.
+3. El modelo podrá ser cargado y entrenado posteriormente con otros scripts del proyecto.
+"""
+
+
 import torch
 import torch.nn.functional as F
 import random
 from MLP import MLP
 from Guardar_Cargar import guardar_modelo
 
-"""
-crear_red_torch.py
--------------------
-
-Este script permite crear y guardar una red neuronal multicapa (MLP) utilizando la implementación matemática definida en el módulo MLP.py.
-El usuario puede definir la arquitectura de la red  y decidir si desea guardar la red resultante en un archivo JSON.
-
-Estructura general del script:
-- Permite definir la arquitectura y funciones de activación de la red MLP.
-- Permite guardar la red (estructura y pesos) en un archivo JSON para su posterior uso.
-
-"""
 
 ## Nombre del nuevo modelo ##
 
-nombre_archivo_red = r"redes_disponibles\mlp_prueba_desc.json"  # Archivo donde se guarda la red
+nombre_archivo_red = r""  # Archivo donde se guarda la red
 
 
 ## ARQUITECTURA de la red ## (Prestar MUCHA ATENCION A FUNCIONES ACTIVACION)
-input_sz = 18      # Número de entradas (asegurar que coincide con los datos que se va a usar)
-out_sz = 5        # Número de salidas (asegurar que coincide con los datos que se va a usar)
-estructura_oct = [18, 18]  # Capas ocultas
-lista_act = None           # Lista de funciones de activación (asegurar compatible con estructura oct)
-                           #(None =[None,...,None] por defecto en MLP)
+input_sz = 18             # Número de entradas (asegurar que coincide con los datos que se va a usar)
+out_sz = 5                # Número de salidas (asegurar que coincide con los datos que se va a usar)
+estructura_oct = []       # Capas ocultas
+lista_act = None          # Lista de funciones de activación (asegurar compatible con estructura oct)
+                          #(None =[None,...,None] por defecto en MLP)
 
 
 ## OPCIONES GUARDADO  ##
