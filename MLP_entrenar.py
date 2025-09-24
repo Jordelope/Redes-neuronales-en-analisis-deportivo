@@ -1,5 +1,25 @@
+"""
+MLP_entrenar.py
+----------------
 
+Este script está diseñado para entrenar modelos de perceptrón multicapa (MLP) implementados desde cero utilizando tensores y funciones de PyTorch, evitando el uso de abstracciones de alto nivel como nn.Module. El objetivo es proporcionar un enfoque matemático y didáctico para el entrenamiento de redes neuronales, facilitando la comprensión de los fundamentos matemáticos y computacionales detrás del aprendizaje profundo.
 
+Funcionalidad principal:
+- Carga un modelo MLP previamente guardado.
+- Procesa los datos de entrenamiento y test utilizando la función `procesar_datos`.
+- Permite configurar hiperparámetros de entrenamiento (número de pasos, learning rate, tamaño de batch, función de pérdida, etc.).
+- Realiza el entrenamiento del modelo sobre los datos proporcionados.
+- Evalúa el error inicial y final sobre el conjunto de test.
+- Permite guardar el modelo entrenado, actualizando la descripción y añadiendo información sobre la mejora obtenida.
+
+Uso:
+1. Configura los archivos de datos y el archivo del modelo a entrenar.
+2. Ajusta los hiperparámetros y opciones de guardado según tus necesidades.
+3. Ejecuta el script para entrenar el modelo y guardar los resultados.
+
+AVISO IMPORTANTE:
+La función `procesar_datos` utilizada para preparar los datos de entrada está desactualizada y puede no ser compatible con todos los formatos de datos actuales. Su uso puede provocar errores, especialmente porque el objetivo final del proyecto es el entrenamiento de autoencoders y la estructura de los datos puede haber cambiado. Se recomienda revisar y actualizar esta función antes de utilizarla en nuevos experimentos.
+"""
 
 
 

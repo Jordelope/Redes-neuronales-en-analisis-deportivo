@@ -1,3 +1,23 @@
+"""
+Autoencoder_crear.py
+--------------------
+
+Este script permite crear y guardar modelos de la clase Autoencoder, compuestos por dos redes MLP (encoder y decoder) definidas en este proyecto.
+Se puede utilizar tanto para crear nuevos modelos desde cero como para ensamblar un autoencoder a partir de MLPs ya existentes.
+
+Funcionalidad principal:
+- Configuración de la arquitectura del encoder y decoder (número de entradas, espacio latente, capas ocultas, funciones de activación).
+- Opción de cargar MLPs previamente guardados o crear nuevos modelos.
+- Instanciación del autoencoder a partir de los MLPs definidos.
+- Guardado del autoencoder y, opcionalmente, de los MLPs por separado.
+- Posibilidad de añadir una descripción personalizada al modelo.
+
+Uso:
+1. Ajusta los parámetros de arquitectura, nombres de archivos y opciones de guardado según tus necesidades.
+2. Ejecuta el script para crear y guardar el modelo Autoencoder.
+3. El modelo podrá ser entrenado y utilizado posteriormente con otros scripts del proyecto.
+"""
+
 import torch
 import torch.nn.functional as F
 import random

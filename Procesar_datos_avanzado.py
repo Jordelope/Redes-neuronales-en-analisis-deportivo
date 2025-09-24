@@ -1,3 +1,11 @@
+"""
+Procesar_datos_avanzado.py
+--------------------------
+
+Este módulo procesa y normaliza datos de jugadores NBA para su uso en autoencoders, permitiendo seleccionar diferentes subconjuntos de estadísticas (completo, volumen, tiro).
+Aplica normalizaciones y filtrado de columnas y filas, convierte los datos a tensores de torch y elimina filas con valores NaN.
+La salida depende del tipo de estadística seleccionada, devolviendo tanto los datos procesados como las etiquetas asociadas a cada jugador.
+"""
 import pandas as pd
 import numpy as np
 import torch

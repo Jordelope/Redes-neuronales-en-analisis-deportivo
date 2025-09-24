@@ -1,3 +1,3 @@
 Todos los datasets provienen de Basketball reference: https://www.basketball-reference.com/
 Datasets per game, per100 pos y per36 min
-En los finales se han dividido segun estilo de stats tradicionales y se han preparado set de entrenamiento, validacio y para analizar jugadores.
+En los finales se han dividido segun estilo de stats tradicionales y se han preparado set de entrenamiento, validacion y para analizar jugadores.

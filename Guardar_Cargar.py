@@ -1,3 +1,11 @@
+"""
+Guardar_Cargar.py
+------------------
+
+Este módulo proporciona funciones generales para guardar y cargar modelos de diferentes tipos (MLP, Autoencoder, Clasificador).
+Detecta automáticamente el tipo de modelo y utiliza la función de guardado/carga correspondiente, facilitando la gestión y persistencia de los modelos del proyecto.
+Lanza errores si se detectan valores NaN en los parámetros o si el tipo de modelo no es reconocido.
+"""
 import torch
 from MLP import MLP, cargar_MLP, guardar_MLP
 from Autoencoder import Autoencoder, guardar_autoencoder, cargar_autoencoder
