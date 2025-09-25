@@ -1,7 +1,8 @@
 
 # Redes Neuronales desde Cero con PyTorch (Enfoque Matemático y Aplicación Deportiva)
 
-Este proyecto tiene como objetivo implementar redes neuronales desde un punto de vista introductorio y matemático, mostrando cómo funcionan internamente los modelos y su entrenamiento usando únicamente tensores y funciones de PyTorch (sin `nn.Module`).
+Este proyecto tiene su origen en mi Trabajo de Fin de Grado (matemáticas), y actualmente sigo desarrollandolo y mejorando.
+El objetivo principal es implementar redes neuronales desde un punto de vista introductorio y matemático, mostrando cómo funcionan internamente los modelos y su entrenamiento usando únicamente tensores y funciones de PyTorch (sin `nn.Module`).
 
 ## Objetivo de la implementación
 
