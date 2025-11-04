@@ -4,7 +4,7 @@ from MLP import MLP
 from Autoencoder import Autoencoder 
 from Red_clasificador.Clasificador import Clasificador 
 from Guardar_Cargar import guardar_modelo, cargar_modelo
-from Desactualizado.Procesar_datos import procesar_datos
+from Desactualizado.Procesar_datos import procesar_datos ## Pendiente de crear un procesado de datos especifico ##
 
 """
 
@@ -22,11 +22,13 @@ def onehot_to_long(targets: torch.Tensor) -> torch.Tensor:
     """
     # Verifica si es un tensor 2D y si cada fila tiene una única posición con valor 1
     if targets.ndim == 2 and torch.all((targets.sum(dim=1) == 1)) and torch.all((targets == 0) | (targets == 1)):
+
         # Es one-hot → convertir a índices
         return torch.argmax(targets, dim=1).long()
+    
     else:
         # Ya está en formato correcto o no es one-hot
-        return targets.long()
+        return targets.long() 
 
 
 ## NOMBRE archivos de encoder/Autoencoder y clasificador ##
@@ -51,8 +53,8 @@ descripcion = "Clasificador solo para visualizar espacio latente de autoencoder 
 
 
 ## ESTRUCTURA mlp_clasificador ##
-n_classes = 5                            # Número de clases de nuestro clasificador
-estructura_oc_mlp_clasificador= [8]      # Capas ocultas mlp_clasificador 
+n_classes = 5                             # Número de clases de nuestro clasificador
+estructura_oc_mlp_clasificador= [8]       # Capas ocultas mlp_clasificador 
 
 lista_activaciones_mlp_clas = [torch.relu for i in range(len(estructura_oc_mlp_clasificador))] + [F.softmax] # Funciones activacion del mlp_clas
 
@@ -69,7 +71,7 @@ loss_f = F.cross_entropy   # Función de pérdida
 ## DATOS de entrenamiento y test ##
 archivo_entrenamiento = r"datasets\nba\combined19_25_pergame_filtered.csv"
 archivo_test = r"datasets\nba\nba24_25_pergame.csv"
-xs_train, ys_train, etiquetas_train, xs_test, ys_test, etiquetas_test = procesar_datos(archivo_set_train=archivo_entrenamiento,
+xs_train, ys_train, etiquetas_train, xs_test, ys_test, etiquetas_test = procesar_datos(archivo_set_train=archivo_entrenamiento, ## Nuevo procesado ##
                                                                                     archivo_set_test=archivo_test,
                                                                                     modo_autoencoder=False,
                                                                                     modo_columnas="solo_volumen",
