@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 from Autoencoder import Autoencoder
 from Guardar_Cargar import cargar_modelo
 from Embeddings import cargar_embeddings
-from Procesar_datos_avanzado import procesar_datos
+from Procesar_datos_AE import procesar_datos
 
 
 
