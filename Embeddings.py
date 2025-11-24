@@ -13,7 +13,7 @@ import numpy as np
 from MLP import MLP
 from Autoencoder import Autoencoder
 from Guardar_Cargar import cargar_modelo
-from Procesar_datos_avanzado import procesar_datos
+from Procesar_datos_AE import procesar_datos
 
 
 def generar_embeddings( autoencoder_path,
