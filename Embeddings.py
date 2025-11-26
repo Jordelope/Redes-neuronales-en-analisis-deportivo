@@ -40,14 +40,6 @@ def generar_embeddings( autoencoder_path,
     embeddings_dict = {jugador: emb for jugador, emb in zip(player_ids, embeddings_np)}
     
     embeddings_dict = {jugador: np.asarray(emb, dtype=np.float32) for jugador, emb in zip(player_ids, embeddings_np)}
-
-    """ # ---------- GUARDAR EN CSV ----------
-    embeddings_list = [[jugador] + emb.tolist() for jugador, emb in embeddings_dict.items()]
-    column_names = ['Player'] + [f"dim_{i}" for i in range(embeddings_np.shape[1])]
-    df_embeddings = pd.DataFrame(embeddings_list, columns=column_names)
-    df_embeddings.to_csv(embeddings_path, index=False)
-
-    print(f"Embeddings generados y guardados en CSV: {embeddings_path}")"""
     return embeddings_dict
 
 def guardar_embeddings(embeddings_dict, embeddings_path):
