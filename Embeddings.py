@@ -20,6 +20,7 @@ def generar_embeddings( autoencoder_path,
                         players_path,
                         modo_columnas: str = "completo"
                         ):
+    
     """
     Genera y devuelve un diccionario {player_id: embedding_numpy_array} usando el encoder
     del autoencoder cargado en `autoencoder_path` aplicado a los datos en `players_path`.
@@ -37,8 +38,6 @@ def generar_embeddings( autoencoder_path,
 
     # Creamos dicc jugador: embedding (aseguramos tipo float32)
     player_ids = etiquetas["Player"].values
-    embeddings_dict = {jugador: emb for jugador, emb in zip(player_ids, embeddings_np)}
-    
     embeddings_dict = {jugador: np.asarray(emb, dtype=np.float32) for jugador, emb in zip(player_ids, embeddings_np)}
     
     return embeddings_dict
