@@ -40,6 +40,7 @@ def generar_embeddings( autoencoder_path,
     embeddings_dict = {jugador: emb for jugador, emb in zip(player_ids, embeddings_np)}
     
     embeddings_dict = {jugador: np.asarray(emb, dtype=np.float32) for jugador, emb in zip(player_ids, embeddings_np)}
+    
     return embeddings_dict
 
 def guardar_embeddings(embeddings_dict, embeddings_path):
