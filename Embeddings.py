@@ -2,7 +2,7 @@
 Embeddings.py
 -------------
 
-Este script permite generar embeddings de jugadores de la NBA utilizando el encoder de un autoencoder previamente entrenado.
+En este script se definen funciones permite generar, guradar y cargar embeddings de jugadores de la NBA utilizando el encoder de un autoencoder previamente entrenado.
 Procesa los datos de los jugadores, obtiene su representación latente (embedding) y guarda el resultado en un archivo CSV.
 Incluye funciones para cargar los embeddings desde CSV y devolverlos en formato diccionario. 
 """
@@ -16,10 +16,10 @@ from Guardar_Cargar import cargar_modelo
 from Procesar_datos_AE import procesar_datos
 
 
-def generar_embeddings( autoencoder_path,
-                        players_path,
+def generar_embeddings( autoencoder_path:str,
+                        players_path:str,
                         modo_columnas: str = "completo"
-                        ):
+                        ) ->dict :
     
     """
     Genera y devuelve un diccionario {player_id: embedding_numpy_array} usando el encoder
@@ -42,7 +42,7 @@ def generar_embeddings( autoencoder_path,
     
     return embeddings_dict
 
-def guardar_embeddings(embeddings_dict, embeddings_path):
+def guardar_embeddings(embeddings_dict:str, embeddings_path:str)->None:
     """
     Guarda `embeddings_dict` en `embeddings_path` en CSV.
 
@@ -76,7 +76,8 @@ def guardar_embeddings(embeddings_dict, embeddings_path):
     df_embeddings.to_csv(embeddings_path, index=False)
 
 
-def cargar_embeddings(csv_file):
+def cargar_embeddings(csv_file:str)->dict:
+    "Carga embedings a un diccionario a partir de un fichero csv en la dirección csv_file."
     df = pd.read_csv(csv_file)
     embeddings_dict = {}
     for _, row in df.iterrows():
